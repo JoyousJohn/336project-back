@@ -1,0 +1,140 @@
+<html>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/wind.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/profile.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+    <script src="js/utils.js"></script>
+    <script src="js/profile.js"></script>
+    
+    <link href="https://fonts.cdnfonts.com/css/richela-kids" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/it-encore-sans" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9fec56898e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="content">
+
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+		    <div class="sidebar-logo">ShoeBae</div>
+			<a href="index.html"><div class="sidebar-item sidebar-explore"><i class="fa-solid fa-house"></i>Explore</div></a>			
+			<div class="sidebar-item sidebar-profile sidebar-selected">
+	            <i class="fa-solid fa-user"></i>Profile
+	        </div>
+			<a href="sell.html"><div class="sidebar-item sidebar-sell"><i class="fa-solid fa-shop"></i>Sell</div></a>
+			<a href="admin.html" class="sidebar-item sidebar-admin" id="adminLink"><i class="fa-solid fa-user-tie"></i>Admin</a>		</div>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-item"><i class="fa-solid fa-circle-question"></i>Support</div>
+            <div class="sidebar-item"><i class="fa-solid fa-gear"></i>Settings</div>
+        </div>
+
+    </div>
+
+    <div class="main flex flex-col w-full">
+
+        <div class="profile-basics">
+            <div class="your-profile">YOUR PROFILE</div>
+            <div class="flex col-gap-2rem">
+                <div class="profile-username-wrap">
+                    <div class="profile-username"></div>
+                    <div class="profile-sub">USERNAME</div>
+                </div>
+                <div class="profile-email-wrap">
+                    <div class="profile-email"></div>
+                    <div class="profile-sub">EMAIL</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-advanced">
+            <div class="profile-auctions">
+                <div class="your-profile">YOUR LISTINGS</div>
+
+                <div class="listings-list">
+                    
+                    <div class="listing-item template-item">
+                        <div class="listing-img"></div>
+                        <div class="listing-info-wrap">
+                            <div class="listing-title">Template Listing Item</div>
+                            <div>
+                                <span class="listing-type">Active auction</span>
+                                <span class="listing-time-remaining"> XXH XXM remaining</span>
+                            </div>
+                            <div class="flex items-center col-gap-1rem">
+                                <span class="listing-price">$XX.XX </span>
+                                <span class="listing-bids">X bids</span>
+                            </div>
+                            <div class="listing-stats">Y views | Z favorites</div>
+                        </div>
+                    </div>
+
+                    <div class="listing-item new-listing" onclick="window.location.href = 'sell.html'">
+                        <div class="new-listing-plus">+</div>
+                        <div class="new-listing-text">CREATE NEW LISTING</div>
+                    </div>
+
+                    <!-- <div class="listing-item">
+                        <div class="listing-img"></div>
+                        <div class="listing-info-wrap">
+                            <div class="listing-title">Chinese Pokemon Water Bottle</div>
+                            <div>
+                                <span class="listing-type">Active auction</span>
+                                <span class="listing-time-remaining"> 2H 7M remaining</span>
+                            </div>
+                            <div class="flex items-center col-gap-1rem">
+                                <span class="listing-price">$4.78 </span>
+                                <span class="listing-bids">4 bids</span>
+                            </div>
+                            <div class="listing-stats">17 views | 3 favorites</div>
+                        </div>
+                    </div>
+
+                    <div class="listing-item">
+                        <div class="listing-img"></div>
+                        <div class="listing-info-wrap">
+                            <div class="listing-title">Generic Auction Placeholder</div>
+                            <div>
+                                <span class="listing-type">Active auction</span>
+                                <span class="listing-time-remaining"> 12H 18M remaining</span>
+                            </div>
+                            <div class="flex items-center col-gap-1rem">
+                                <span class="listing-price">$24.20 </span>
+                                <span class="listing-bids">31 bids</span>
+                            </div>
+                            <div class="listing-stats">4 views | 3 favorites</div>
+                        </div>
+                    </div> -->
+
+                </div>
+            </div>
+            <div class="profile-alerts">
+                <div class="your-profile">YOUR ALERTS</div>
+            </div>
+            
+        </div>
+        
+        
+        <form id="logout" action="logout.jsp" method="post">
+        	<button type="submit" class="logout-btn">LOGOUT</button>
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function() {
+        updateSidebar(); // Call the function when the document is ready
+    });
+</script>
+
+</body>
+
+</html>

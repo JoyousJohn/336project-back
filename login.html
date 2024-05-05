@@ -1,0 +1,125 @@
+<html>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/wind.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/login.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	
+	<script src="js/utils.js"></script>  
+	<script src="js/login.js"></script>      
+	<script src="js/signup.js"></script>      
+
+    <link href="https://fonts.cdnfonts.com/css/richela-kids" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/it-encore-sans" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9fec56898e.js" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+
+	<div class="content">
+	
+	    <div class="sidebar">
+	
+	    <div class="sidebar-top">
+	        <div class="sidebar-logo">ShoeBae</div>
+	        <a href="index.html" class="sidebar-item sidebar-explore"><i class="fa-solid fa-house"></i>Explore</a>
+	        <div class="sidebar-item sidebar-profile sidebar-selected">
+	            <i class="fa-solid fa-user"></i>Profile
+	        </div>
+	        <div class="sidebar-item sidebar-sell">
+	            <i class="fa-solid fa-shop"></i>Sell
+	        </div>
+	         <div class="sidebar-item sidebar-admin"><i class="fa-solid fa-user-tie"></i>Admin</div>
+	    </div>
+	
+	    <div class="sidebar-bottom">
+	        <div class="sidebar-item"><i class="fa-solid fa-circle-question"></i>Support</div>
+	        <div class="sidebar-item"><i class="fa-solid fa-gear"></i>Settings</div>
+	    </div>
+	
+	</div>
+	
+    <div class="main">
+
+        <div class="login-signup-wrapper flex">
+
+            <div class="login-wrapper">
+                <div class="login-header">Returning user login</div>
+				<div class="error-message" id="error-message" style="display: none;">Invalid username or password</div>
+                <form id="login" action="login.jsp" method="post">
+                    <input type="text" class="login-username" name="username" placeholder="Username">
+        			<input type="password" class="login-password" name="password" placeholder="Password">
+                    <button type="submit" class="login-btn">LOGIN</button>
+                </form>
+            </div>
+
+            <div class="sign-up-wrapper">
+                <div class="login-header">New user signup</div>
+                <div class="error-message" id="error-message" style="display: none;">Invalid username or password</div>
+                <form id="signup" action="signup.jsp" method="post">
+                    <input type="text" class="sign-up-username" name="username" placeholder="Username">
+                    <input type="text" class="sign-up-name" name="name" placeholder="Name">
+                    <input type="text" class="sign-up-email" name="email" placeholder="Email">
+                    <input type="password" class="sign-up-password" name="password" placeholder="Password">                
+                    <input type="password" class="sign-up-password-confirm" name="password-confirm" placeholder="Confirm password">                
+                	<button type="submit" class="login-btn">SIGN UP</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function() {
+    	
+        updateSidebar(); // Call the function when the document is ready
+
+    	
+        $('#signup').submit(function(event) {
+            event.preventDefault();
+
+            var password = $('.sign-up-password').val();
+            var confirmPassword = $('.sign-up-password-confirm').val();
+
+            // Check if the passwords match
+            if (password !== confirmPassword) {
+                $('#error-message').text("Passwords do not match").show(); // Display error message
+                return; // Prevent form submission
+            }
+
+            // If passwords match, proceed with form submission
+            $.ajax({
+                type: 'POST',
+                url: 'signup.jsp',
+                data: $(this).serialize(), // Serialize form data for submission
+                success: function(response) {
+                    var parts = response.trim().split("|");
+                    if (parts[0] === "success") {
+                        // Signup successful, redirect to profile.html
+                        window.location.href = 'profile.html';
+                    } else {
+                        // Signup failed, display error message
+                        $('#error-message').text("Signup failed: " + parts[1]).show();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error during signup:', error);
+                    $('#error-message').text("An error occurred during signup. Please try again.").show();
+                }
+            });
+        });
+    });
+</script>
+
+
+</body>
+
+</html>

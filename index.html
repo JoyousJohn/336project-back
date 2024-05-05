@@ -1,0 +1,128 @@
+<html>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/wind.css">
+    <link rel="stylesheet" href="css/auction.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/explore.css">
+    <link rel="stylesheet" href="css/alert.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>    
+    
+    <script src="js/utils.js"></script>
+    <script src="js/profile.js"></script>
+    
+    
+    <script src="js/rand.js"></script>
+    <script src="js/example.js"></script>
+    <script src="js/alerts.js"></script>
+    
+    <link href="https://fonts.cdnfonts.com/css/richela-kids" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/it-encore-sans" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9fec56898e.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+<div class="content">
+
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+            <div class="sidebar-logo">ShoeBae</div>
+            <div class="sidebar-item sidebar-explore sidebar-selected">
+	            <i class="fa-solid fa-house"></i>Explore
+	        </div>
+			<a href="profile.html" class="sidebar-item sidebar-profile" id="profileLink">
+			    <i class="fa-solid fa-user"></i><span class="txt">Profile</span>
+			</a>  
+		    <a href="sell.html" class="sidebar-item sidebar-sell"><i class="fa-solid fa-shop"></i>Sell</a>
+			<a href="admin.html" class="sidebar-item sidebar-admin" id="adminLink"><i class="fa-solid fa-user-tie"></i>Admin</a>		</div>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-item"><i class="fa-solid fa-circle-question"></i>Support</div>
+            <div class="sidebar-item"><i class="fa-solid fa-gear"></i>Settings</div>
+        </div>
+
+    </div>
+
+    <div class="main w-full flex flex-col">
+
+        <div class="navbar">
+
+            <form class="search-form w-full flex items-center" action="/search" method="get">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" class="search-input" name="search" placeholder="Search for anything...">
+            </form>
+
+            <div class="search-btn-wrapper">
+                <span class="search-btn">Search</span>
+            </div>
+
+            <div class="navbar-bell">
+                
+                <i class="fa-solid fa-bell"></i>
+
+                <div class="alert-notif-count">3</div>
+
+                <div class="alert-wrapper none">
+
+                    <div class="your-alerts">YOUR ALERTS</div>
+
+                    <div class="alert-list">
+
+                        <div class="alert-item">
+                            <div class="alert-item-header"><span class="alert-item-time">5:28PM | </span>You were outbid!</div>
+                            <div class="alert-item-title">Vintage Red Furniture</div>
+                            <div class="alert-item-prices">Your bid: $4.20 | Winning bid: $8.88</div>
+                            <a href="item/"><div class="alert-item-view">View item</div></a>
+                        </div>
+
+                        <div class="alert-item">
+                            <div class="alert-item-header"><span class="alert-item-time">4:20AM | </span>You were outbid!</div>
+                            <div class="alert-item-title">Signature Bliss 3 Pack</div>
+                            <div class="alert-item-prices">Your bid: $3.79 | Winning bid: $178.88</div>
+                            <a href="item/"><div class="alert-item-view">View item</div></a>
+                        </div>
+
+                        <div class="alert-item">
+                            <div class="alert-item-header"><span class="alert-item-time">18:50AM | </span>You were outbid!</div>
+                            <div class="alert-item-title">Busch Cotton Candy Nugget</div>
+                            <div class="alert-item-prices">Your bid: $13.79 | Winning bid: $72.30</div>
+                            <a href="item/"><div class="alert-item-view">View item</div></a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="auctions">
+
+            <div class="auction-template none">
+
+                <div class="auction-img"></div>
+                <div class="auction-title">Example auction</div>
+                <div class="auction-sub-info"><span class="auction-price">$57.57</span> | <span class="auction-bidders"></span></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function() {
+        updateSidebar(); // Call the function when the document is ready
+    });
+</script>
+
+</body>
+
+</html>
