@@ -1,38 +1,10 @@
 $(document).ready(function() {
-	
-    // Check if the user is logged in
-    isLoggedIn().then((result) => {
-        const { loggedIn, username, role } = result;
-        if (loggedIn) {
-            // Execute code dependent on loggedIn status here
-            $('.profile-username').text(username);
-            //$('.profile-email').text(email);
-            // Populate listings only after updating isLoggedInStatus
-            populateListings(); // Make sure this function works correctly
 
-            // Check if the user is an admin
-            if (role === 'ADMIN') {
-                $('#adminLink').attr('href', 'admin.html');
-            } else {
-                // Prevent access to admin page if not admin
-                $('#adminLink').attr('href', 'javascript:void(0)');
-                $('#adminLink').off('click');
-                $('#adminLink').on('click', function(event) {
-                    event.preventDefault();
-                    alert("You are not authorized to access the admin page.");
-                });
-            }
-        } else {
-            // Redirect or handle the case where user is not logged in
-            window.location.href = 'login.html';
-        }
-    }).catch((error) => {
-        console.error("Error checking login status:", error);
-    });
-});
+    populateListings();
 
+})
 
-// Function to check if the user is logged in and log the role
+// Update isLoggedIn function to handle errors more effectively and provide feedback to the user
 function isLoggedIn() {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -47,7 +19,7 @@ function isLoggedIn() {
             },
             error: function(xhr, status, error) {
                 console.error("Error checking login status:", error);
-                resolve({ loggedIn: false, username: null, role: null });
+                reject("Error checking login status");
             }
         });
     });
@@ -59,6 +31,7 @@ function updateSidebar() {
         const profileLink = $('#profileLink');
         const sellLink = $('.sidebar-sell');
         const adminLink = $('.sidebar-admin');
+        const exploreLink = $('.sidebar-explore');
 
         if (loggedIn) {
             // User is logged in
@@ -68,24 +41,27 @@ function updateSidebar() {
             if (role === 'ADMIN') {
                 adminLink.attr('href', 'admin.html');
             } else {
-                // If not an admin, prevent default action on admin link
                 adminLink.attr('href', 'javascript:void(0)');
-                adminLink.off('click'); // Remove previous click event handler
+                adminLink.off('click');
                 adminLink.on('click', function(event) {
                     event.preventDefault();
                     alert("You are not authorized to access the admin page.");
                 });
             }
+            // Update the Explore link to point to index.html
+            exploreLink.attr('href', 'index.html');
         } else {
             // User is not logged in
             profileLink.attr('href', 'login.html');
             sellLink.attr('href', 'javascript:void(0)');
             adminLink.attr('href', 'javascript:void(0)');
-            adminLink.off('click'); // Remove previous click event handler
+            adminLink.off('click');
             adminLink.on('click', function(event) {
                 event.preventDefault();
                 alert("Please log in to access the admin page.");
             });
+            // Update the Explore link to point to index.html
+            exploreLink.attr('href', 'index.html');
         }
     }).catch((error) => {
         console.error("Error updating sidebar:", error);

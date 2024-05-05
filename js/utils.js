@@ -21,6 +21,8 @@ function isLoggedIn() {
     });
 }
 
+// utils.js
+
 function updateSidebar() {
     isLoggedIn().then((result) => {
         const { loggedIn, username, role } = result;
@@ -44,11 +46,13 @@ function updateSidebar() {
                     alert("You are not authorized to access the admin page.");
                 });
             }
-            // Set the Explore link to index.html when logged in
+            // Update the Explore link to point to index.html
             exploreLink.attr('href', 'index.html');
         } else {
             // User is not logged in
-            profileLink.attr('href', 'login.html'); // Set profile link to login.html when not logged in
+            exploreLink.attr('href', 'index.html');
+
+            profileLink.attr('href', 'login.html');
             sellLink.attr('href', 'javascript:void(0)');
             adminLink.attr('href', 'javascript:void(0)');
             adminLink.off('click');
@@ -56,10 +60,8 @@ function updateSidebar() {
                 event.preventDefault();
                 alert("Please log in to access the admin page.");
             });
-
-            // Set the Explore link to index.html when not logged in
-            exploreLink.attr('href', 'index.html');
-        }
+            // Update the Explore link to point to index.html
+                    }
     }).catch((error) => {
         console.error("Error updating sidebar:", error);
     });
