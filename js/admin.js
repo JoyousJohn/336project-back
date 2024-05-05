@@ -1,5 +1,3 @@
-let selectedUser // Holds the currently selected user
-
 $(document).ready(function() {
     let selectedUser; // Holds the currently selected user
     let users; // Define users at a higher scope
@@ -11,7 +9,7 @@ $(document).ready(function() {
     function getUsers() {
         $.ajax({
             type: 'GET',
-            url: 'admin.jsp', // Update the URL to match your endpoint
+            url: 'admin.jsp',
             success: function(response) {
                 if (response.startsWith("failure")) {
                     console.error('Error getting users:', response.split('|')[1]);
@@ -31,60 +29,45 @@ $(document).ready(function() {
         });
     }
 
-// Function to parse user data from plain text response
-function parseUsers(response) {
-    // Split the response into lines
-    const lines = response.trim().split('\n');
-    // Initialize an array to hold user objects
-    const userList = [];
-    // Loop through each line and parse user data
-    lines.forEach(function(line) {
-        // Split the line into fields
-        const fields = line.trim().split('|');
-        // Ensure that the line has the correct number of fields
-        if (fields.length >= 3) {
-            // Extract username, name, and email
-            const username = fields[0];
-            const name = fields.slice(1, -1).join('|'); // Join all but the last field as name
-            const email = fields[fields.length - 1]; // Last field is email
-            // Construct user object
-            const user = {
-                username: username,
-                name: name,
-                email: email
-            };
-            userList.push(user);
-        } else {
-            console.error('Invalid user data:', line);
-        }
-    });
-    return userList;
-}
-
+    // Function to parse user data from plain text response
+    function parseUsers(response) {
+        const lines = response.trim().split('\n');
+        const userList = [];
+        lines.forEach(function(line) {
+            const fields = line.trim().split('|');
+            if (fields.length >= 4) {
+                const user = {
+                    username: fields[0],
+                    name: fields[1],
+                    email: fields[2],
+                    role: fields[3]
+                };
+                userList.push(user);
+            } else {
+                console.error('Invalid user data:', line);
+            }
+        });
+        return userList;
+    }
 
     // Function to display users received from the server
     function displayUsers(usersData) {
         $('.user-list').empty(); // Clear existing user list
-
-        // Iterate over received users and append them to the user list
         usersData.forEach(function(user) {
             const $userElm = `
-                <div username="${user.username}">${user.username}<span class="user-role user-role-${user.role}">${user.role}</span></div>
+                <div username="${user.username}">${user.username}<span class="user-role user-role-${user.role.toLowerCase()}">${user.role}</span></div>
                 <div username="${user.username}">${user.name}</div>
                 <div username="${user.username}">${user.email}</div>
             `;
             $('.user-list').append($userElm);
         });
-
         $('.manage-users').text(`Manage users (${usersData.length})`); // Update the manage users count
     }
-
 
     // Highlight in blue on hover
     $('.user-list > div:not(.list-head)').hover(function() {
         const name = $(this).attr('username')
         $(`div[username="${name}"]`).addClass('user-hover')
-    // Unhover
     }, function() {
         const name = $(this).attr('username')
         $(`div[username="${name}"]`).removeClass('user-hover')
@@ -92,12 +75,11 @@ function parseUsers(response) {
 
     // Show user management options when a user is clicked
     $('.user-list > div:not(.list-head)').click(function() {
-
         const name = $(this).attr('username')
         if (selectedUser && name === selectedUser.username) return
 
         $('.managing-user').removeClass('managing-user')
-        selectedUser = users[name]
+        selectedUser = users.find(user => user.username === name)
         $(`div[username="${name}"]`).addClass('managing-user')
 
         $('.manage-col-selected').removeClass('manage-col-selected')
@@ -109,13 +91,12 @@ function parseUsers(response) {
 
         // Fill in input placeholders
         $('.change-username-input').attr('placeholder', name).val('')
-        $('.change-name-input').attr('placeholder', users[name].name).val('')
-        $('.change-email-input').attr('placeholder', users[name].email).val('')
+        $('.change-name-input').attr('placeholder', selectedUser.name).val('')
+        $('.change-email-input').attr('placeholder', selectedUser.email).val('')
         $('.change-password-input').attr('placeholder', '*****...').val('')
-        $('.change-role-input').val(users[name].role.toLowerCase()) // Change selected role to current role
+        $('.change-role-input').val(selectedUser.role.toLowerCase()) // Change selected role to current role
 
         // If error message telling user they didn't change anything is showing, clear it and reset the button to "Save changes"
-        // no-changes just makes the background red and sets cursor to default
         $('.save-changes').text("Save changes").removeClass('no-changes')
 
         // Remove any delete confirmation from past users being deleted
@@ -127,7 +108,6 @@ function parseUsers(response) {
     $('.user-management-example').hide();
 
     // If error message telling user they didn't change anything is showing, clear it and reset the button to "Save changes"
-    // no-changes just makes the background red and sets cursor to default
     $('.manage-info input').click(function() {
         $('.save-changes').text("Save changes").removeClass('no-changes')
     })  
@@ -139,19 +119,15 @@ function parseUsers(response) {
 
     // Show create new user input form when new user button is clicked
     $('.create-user').click(function() {
-
         if ($('.create-user-form').is(':visible')) {
             $('.create-user-form').slideUp();
             return
         }
-
         $(this).addClass('create-user-expanded')
         $('.create-user-form').removeClass('none').hide().slideDown();
-
     })
 
     $('.manage-columns > div').click(function() {
-   
         if ($(this).hasClass('manage-col-selected')) return;
 
         $('.manage-col-selected').removeClass('manage-col-selected')
@@ -162,105 +138,107 @@ function parseUsers(response) {
         const managing = $(this).attr('managing')
         console.log(managing)
         $(`.${managing}-wrap`).show().removeClass('none');
-
     })
 
     $('.delete-user-btn').click(function() {
-
         const isConfirming = $(this).hasClass('delete-confirming') // require a 2nd confirmation 
-
         // Ask admin/rep to confirm first
         if (!isConfirming) {
-           $(this).text('Confirm Deletion').addClass('delete-confirming')
-           $('.no-undone').removeClass('none').hide().fadeIn('fast');
-           return
+            $(this).text('Confirm Deletion').addClass('delete-confirming')
+            $('.no-undone').removeClass('none').hide().fadeIn('fast');
+            return
         }
-
         // Actually delete the user
         else {
             $(this).text('Deleting user...').css('cursor', 'default')
             deleteUser(selectedUser.username)
         }
-
     })
+    
+    $('.create-user-confirm').click(createNewUser);
 
 })
 
 // Delete this user from SQL via POST request.
 function deleteUser(username) {
-
     $.ajax({
         type: 'POST',
-        url: 'delete_user', // change this as you wish
-        data: JSON.stringify(username),
+        url: 'admin.jsp', // change this as you wish
+        data: { deleteUsername: username }, // Modified to pass username in data
         success: function(response) {
             // alert("User successfully deleted!") // For now just show an alert, will add some absolute/fixed button later
             $(`div[username="${username}"]`).remove();
             $('.user-management-example').slideUp();
-
         },
-
-        // If there was an error deleting the user, like another admin already deleting it and the username no longer existing
         error: function(xhr, status, error) {
             console.error('Error deleting user:', status);
             $('.delete-user-btn').text('Error deleting user: ' +  status)
         }
     });
-
 }
 
 
-// Return all users from users table and their basic data via JSP endpoint
-function getUsers() {
+var creatingUser = false; // Global flag to track if a user creation process is already ongoing
 
+function createNewUser() {
+    if (creatingUser) {
+        console.log("User creation process already in progress.");
+        return; // Exit the function if user creation is already in progress
+    }
+
+    // Get user data from the input fields
+    var username = $('.new-user-username').val();
+    var name = $('.new-user-name').val();
+    var email = $('.new-user-email').val();
+    var password = $('.new-user-password').val();
+    var role = $('.new-user-role').val();
+
+    // Check if any field is empty
+    if (!username || !name || !email || !password || !role) {
+        // If any field is empty, show an error message and exit
+        $('.create-user-confirm').text("Please fill in all fields!").addClass('create-user-error');
+        return;
+    }
+
+    console.log("Attempting to create new user...");
+    creatingUser = true; // Set flag to indicate user creation process has started
+
+    // Send AJAX request to the server
     $.ajax({
-        type: 'GET',
-        url: 'get_all_users', // change this as you wish
+        type: 'POST',
+        url: 'admin.jsp',
+        data: {
+            createNewUser: 'true', // Add this parameter to indicate new user creation
+            username: username,
+            name: name,
+            email: email,
+            password: password,
+            role: role
+        },
         success: function(response) {
-            return response.data;
+            console.log("Server response:", response);
+            if (response.includes("success")) {
+                alert("User created successfully.");
+                // After the user clicks OK on the alert, reload the page
+                window.location.reload();
+            } else if (response.startsWith("failure")) {
+                var responseData = response.split("|");
+                alert("Failed to create user: " + responseData[1]);
+            } else {
+                alert("Unexpected response from server.");
+            }
+            creatingUser = false; // Reset flag when user creation process completes
         },
         error: function(xhr, status, error) {
-            console.error('Error getting users:', error);
+            console.error("Error:", error);
+            console.log("Respose:",response);
+            alert("Error: Unable to create user.");
+            creatingUser = false; // Reset flag on error as well
         }
     });
-
 }
 
-// Function that runs when "Create New User" is pressed
-function createNewUser() {
 
-    const newUserUsername = $('.new-user-username').val()
-    const newUserName = $('.new-user-name').val()
-    const newUserEmail = $('.new-user-email').val()
-    const newUserPassword = $('.new-user-password').val()
-    const newUserRole = $('.new-user-role').val()
-
-    let missingSomething = false
-
-    // If a field isn't filled in tell the user and return
-    if (newUserUsername === '' || newUserName === '' || newUserEmail === '' || newUserPassword === '' || newUserRole === '') {
-        missingSomething = true
-        $('.create-user-confirm').text('Please fill in all fields!').addClass('create-user-error')
-        return
-    }
-
-    // Else send new account info to JSP
-    else {
-
-        const newUser = {
-            'username': newUserUsername,
-            'name': newUserName,
-            'email': newUserEmail,
-            'password': newUserPassword,
-            'role': newUserRole
-        }
-
-        postNewUser(newUser)
-
-    }
-   
-
-}
 
 // Send create new user via admin panel post request to server
 // This can be the same endpoint and logic as creating a new user on the profile/login/sign up page
@@ -268,7 +246,7 @@ function postNewUser(newUser) {
 
     $.ajax({
         type: 'POST',
-        url: 'create_new_user', // change this as you wish
+        url: 'admin.jsp', // change this as you wish
         data: JSON.stringify(newUser),
         contentType: 'application/json',
 
@@ -338,7 +316,7 @@ function postUserChanges(changesObj) {
 
     $.ajax({
         type: 'POST',
-        url: 'change_user_data', // change this as you wish
+        url: 'admin.jsp', // change this as you wish
         data: JSON.stringify(changesObj),
         contentType: 'application/json',
 

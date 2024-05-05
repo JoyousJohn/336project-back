@@ -1,91 +1,89 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="java.io.*, java.util.*, java.sql.*, java.util.UUID" %>
-<%@ page import="com.cs336.pkg.ApplicationDB" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" import="java.io.*,java.util.*,java.sql.*"%>
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+<%@ page import="com.cs336.pkg.*" %>
 
 <%
     ApplicationDB db = new ApplicationDB();
-    Connection con = null;
+    Connection con = db.getConnection();
 
-    try {
-        con = db.getConnection();
-        String action = request.getParameter("action");
+    // Check if the request is for creating a new user
+    String createNewUser = request.getParameter("createNewUser");
 
-        if (action != null) {
-            if (action.equals("delete")) {
-                String username = request.getParameter("username");
-                // Delete user
-                PreparedStatement deleteStmt = con.prepareStatement("DELETE FROM users WHERE username = ?");
-                deleteStmt.setString(1, username);
-                int rowsAffected = deleteStmt.executeUpdate();
-                if (rowsAffected > 0) {
-                    out.print("success|User " + username + " deleted successfully");
-                } else {
-                    out.print("failure|Failed to delete user " + username);
-                }
-            } else if (action.equals("create")) {
-                String username = request.getParameter("username");
-                String email = request.getParameter("email");
-                String password = request.getParameter("password");
-                String name = request.getParameter("name");
+    if (createNewUser != null && createNewUser.equals("true")) {
+        // Get user details from the request parameters
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String name = request.getParameter("name");
+        String role = request.getParameter("role"); // Get role from request parameters
+        role = (role != null && !role.isEmpty()) ? role : "USER"; // Default role to "USER" if not provided
 
-                // Check if username or email already exists
-                PreparedStatement usernameCheckStmt = con.prepareStatement("SELECT * FROM users WHERE username = ?");
-                usernameCheckStmt.setString(1, username);
-                ResultSet usernameResult = usernameCheckStmt.executeQuery();
+        // Check if the username already exists
+        PreparedStatement usernameCheckStmt = con.prepareStatement("SELECT * FROM end_user WHERE username = ?");
+        usernameCheckStmt.setString(1, username);
+        ResultSet usernameResult = usernameCheckStmt.executeQuery();
 
-                PreparedStatement emailCheckStmt = con.prepareStatement("SELECT * FROM users WHERE email = ?");
-                emailCheckStmt.setString(1, email);
-                ResultSet emailResult = emailCheckStmt.executeQuery();
+        // Check if the email already exists
+        PreparedStatement emailCheckStmt = con.prepareStatement("SELECT * FROM end_user WHERE email = ?");
+        emailCheckStmt.setString(1, email);
+        ResultSet emailResult = emailCheckStmt.executeQuery();
 
-                if (usernameResult.next() || emailResult.next()) {
-                    out.print("failure|Username or email already exists");
-                } else {
-                    // Insert new user
-                    PreparedStatement insertStmt = con.prepareStatement("INSERT INTO users (username, email, password, name, role) VALUES (?, ?, ?, ?, 'USER')");
-                    insertStmt.setString(1, username);
-                    insertStmt.setString(2, email);
-                    insertStmt.setString(3, password);
-                    insertStmt.setString(4, name);
+        // If username or email already exists, return failure
+        if (usernameResult.next() || emailResult.next()) {
+            out.print("failure|Username or email already exists");
+        } else {
+            // Generate a random user ID within the range of 10 to 1000
+            int userId = (int) (Math.random() * (1000 - 10 + 1)) + 10;
 
-                    int rowsAffected = insertStmt.executeUpdate();
-                    if (rowsAffected > 0) {
-                        out.print("success|User " + username + " created successfully");
-                    } else {
-                        out.print("failure|Failed to create user " + username);
-                    }
-                }
-            } else if (action.equals("update")) {
-                String username = request.getParameter("username");
-                String email = request.getParameter("email");
-                String password = request.getParameter("password");
-                String name = request.getParameter("name");
-                String role = request.getParameter("role");
+            // Insert the new user into the database
+            PreparedStatement insertStmt = con.prepareStatement("INSERT INTO end_user (user_id, username, email, password, name, role) VALUES (?, ?, ?, ?, ?, ?)");
+            insertStmt.setInt(1, userId);
+            insertStmt.setString(2, username);
+            insertStmt.setString(3, email);
+            insertStmt.setString(4, password);
+            insertStmt.setString(5, name);
+            insertStmt.setString(6, role);
 
-                // Update user
-                PreparedStatement updateStmt = con.prepareStatement("UPDATE users SET email = ?, password = ?, name = ?, role = ? WHERE username = ?");
-                updateStmt.setString(1, email);
-                updateStmt.setString(2, password);
-                updateStmt.setString(3, name);
-                updateStmt.setString(4, role);
-                updateStmt.setString(5, username);
-
-                int rowsAffected = updateStmt.executeUpdate();
-                if (rowsAffected > 0) {
-                    out.print("success|User " + username + " updated successfully");
-                } else {
-                    out.print("failure|Failed to update user " + username);
-                }
+            int rowsAffected = insertStmt.executeUpdate();
+            if (rowsAffected > 0) {
+                // Return success response
+                out.print("success|User created successfully");
+            } else {
+                // Return failure response
+                out.print("failure|An error occurred while creating the user");
             }
         }
-    } catch (SQLException e) {
-        e.printStackTrace(); // Log the exception for debugging
-        out.print("failure|An error occurred: " + e.getMessage()); // Provide error message to client
-    } finally {
-        try {
-            if (con != null) {
-                con.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(); // Log the exception for debugging
+    } else {
+        // Query to fetch all users
+        String query = "SELECT username, name, email, role FROM end_user";
+
+        PreparedStatement ps = con.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        // Initialize a StringBuilder to build the response
+        StringBuilder responseBuilder = new StringBuilder();
+
+        while (rs.next()) {
+            // Fetch user details from the result set
+            String username = rs.getString("username");
+            String name = rs.getString("name");
+            String email = rs.getString("email");
+            String role = rs.getString("role");
+
+            // Append user details to the response
+            responseBuilder.append(username).append("|")
+                           .append(name).append("|")
+                           .append(email).append("|")
+                           .append(role).append("\n");
         }
+
+        // Close resources
+        rs.close();
+        ps.close();
+
+        // Send back the response
+        out.print(responseBuilder.toString());
     }
+
+    con.close();
 %>
