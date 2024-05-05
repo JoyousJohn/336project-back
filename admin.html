@@ -36,83 +36,118 @@
 
     </div>
 
-    <div class="main w-full">
+    <div class="main w-full flex flex-col">
 
-        <div class="user-list-wrapper mont w-full">
+        <div class="m-2 flex col-gap-1rem">
 
             <div class="manage-users">Manage users</div>
 
-            <div class="user-list">
-                <div class="list-head">Username</div>
-                <div class="list-head">Name</div>
-                <div class="list-head">Email</div>
-            </div>
-
-            <div class="user-management-example">
-
-                <div class="manage-columns flex col-gap-1rem">
-                    <div class="manage-col-selected">Account Info</div> |
-                    <div>Bids</div> |
-                    <div>Auctions</div>
-                </div>
-
-                <div class="manage-info-wrap flex flex-col items-center">
-
-                    <div class="manage-info">
-                        <div>
-                            <div>Update username:</div>
-                            <form>
-                                <input type="text" class="change-username-input">
-                            </form>
+            <div class="create-user-wrapper">
+                <div class="create-user">Create new user +</div>
+                <form class="create-user-form none">
+                    <input class="new-user-username" type="text" placeholder="Username">
+                    <input class="new-user-name" type="text" placeholder="Name">
+                    <input class="new-user-email" type="text" placeholder="Email">
+                    <input class="new-user-password" type="text" placeholder="Password">
+                    <select class="new-user-role">
+                        <option>User</option>
+                        <option>Admin</option>
+                        <option>Rep</option>
+                    </select>
+                    <div class="create-user-confirm-wrap">
+                        <div class="create-user-confirm" onclick="createNewUser()">
+                            Create New User
                         </div>
-        
-                        <div>
-                            <div>Update name:</div>
-                            <form>
-                                <input type="text" class="change-name-input">
-                            </form>
-                        </div>
-                        
-                        <div>
-                            <div>Update email:</div>
-                            <form>
-                                <input type="text" class="change-email-input">
-                            </form>
-                        </div>
-        
-                        <div>
-                            <div>Update password:</div>
-                            <form>
-                                <input type="text" class="change-password-input">
-                            </form>
-                        </div>
-
-                        <div>
-                            <div>Set role:</div>
-                             <select class="change-role-input">
-                                <option value="user">USER</option>
-                                <option value="rep">REP</option>
-                                <option value="admin">ADMIN</option>
-                            </select>
-                        </div>
-        
                     </div>
-
-                    <div class="save-changes" onclick="saveUserChanges()">
-                        Save Changes
-                    </div>
-                    
-                </div>
-
+                </form>
+                
+                
             </div>
 
         </div>
 
+        <div class="m-2 mt-0">
+            <div class="user-list-wrapper mont w-full">
+
+                <div class="user-list">
+                    <div class="list-head">Username</div>
+                    <div class="list-head">Name</div>
+                    <div class="list-head">Email</div>
+                </div>
+    
+                <div class="user-management-example">
+    
+                    <div class="manage-columns flex col-gap-1rem">
+                        <div class="manage-account-info manage-col-selected" managing="manage-info">Account Info</div> |
+                        <div>Bids</div> |
+                        <div>Auctions</div> |
+                        <div class="manage-danger" managing="manage-danger">Danger</div>
+                    </div>
+    
+                    <div class="manage-info-wrap flex flex-col items-center">
+    
+                        <div class="manage-info">
+                            <div>
+                                <div>Update username:</div>
+                                <form>
+                                    <input type="text" class="change-username-input">
+                                </form>
+                            </div>
+            
+                            <div>
+                                <div>Update name:</div>
+                                <form>
+                                    <input type="text" class="change-name-input">
+                                </form>
+                            </div>
+                            
+                            <div>
+                                <div>Update email:</div>
+                                <form>
+                                    <input type="text" class="change-email-input">
+                                </form>
+                            </div>
+            
+                            <div>
+                                <div>Update password:</div>
+                                <form>
+                                    <input type="text" class="change-password-input">
+                                </form>
+                            </div>
+    
+                            <div>
+                                <div>Set role:</div>
+                                <select class="change-role-input">
+                                    <option value="user">User</option>
+                                    <option value="rep">Rep</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+            
+                        </div>
+    
+                        <div class="save-changes" onclick="saveUserChanges()">
+                            Save Changes
+                        </div>
+                        
+                    </div>
+    
+                    <div class="manage-danger-wrap none">
+
+                        <div class="delete-user-btn">Delete User</div>
+                        <div class="no-undone none">Warning: This can't be undone!</div>
+
+                    </div>
+                     
+                </div>
+    
+            </div>
+        </div>
+        
+
     </div>
 
 </div>
-
-
 
 </body>
 
