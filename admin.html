@@ -1,0 +1,119 @@
+<html>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/wind.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/admin.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+    <script src="js/utils.js"></script>
+    <script src="js/admin.js"></script>
+
+    <link href="https://fonts.cdnfonts.com/css/richela-kids" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/it-encore-sans" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9fec56898e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="content">
+
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+            <div class="sidebar-logo">ShopBay</div>
+            <a href="index.html"><div class="sidebar-item sidebar-explore"><i class="fa-solid fa-house"></i>Explore</div></a>
+            <a href="profile.html"><div class="sidebar-item sidebar-login"><i class="fa-solid fa-user"></i><span class="txt">Profile</span></div></a>
+            <a href="sell.html"><div class="sidebar-item sidebar-sell"><i class="fa-solid fa-shop"></i>Sell</div></a>
+            <div class="sidebar-item sidebar-selected sidebar-admin"><i class="fa-solid fa-user-tie"></i>Admin</div></a>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-item"><i class="fa-solid fa-circle-question"></i>Support</div>
+            <div class="sidebar-item"><i class="fa-solid fa-gear"></i>Settings</div>
+        </div>
+
+    </div>
+
+    <div class="main w-full">
+
+        <div class="user-list-wrapper mont w-full">
+
+            <div class="manage-users">Manage users</div>
+
+            <div class="user-list">
+                <div class="list-head">Username</div>
+                <div class="list-head">Name</div>
+                <div class="list-head">Email</div>
+            </div>
+
+            <div class="user-management-example">
+
+                <div class="manage-columns flex col-gap-1rem">
+                    <div class="manage-col-selected">Account Info</div> |
+                    <div>Bids</div> |
+                    <div>Auctions</div>
+                </div>
+
+                <div class="manage-info-wrap flex flex-col items-center">
+
+                    <div class="manage-info">
+                        <div>
+                            <div>Update username:</div>
+                            <form>
+                                <input type="text" class="change-username-input">
+                            </form>
+                        </div>
+        
+                        <div>
+                            <div>Update name:</div>
+                            <form>
+                                <input type="text" class="change-name-input">
+                            </form>
+                        </div>
+                        
+                        <div>
+                            <div>Update email:</div>
+                            <form>
+                                <input type="text" class="change-email-input">
+                            </form>
+                        </div>
+        
+                        <div>
+                            <div>Update password:</div>
+                            <form>
+                                <input type="text" class="change-password-input">
+                            </form>
+                        </div>
+
+                        <div>
+                            <div>Set role:</div>
+                             <select class="change-role-input">
+                                <option value="user">USER</option>
+                                <option value="rep">REP</option>
+                                <option value="admin">ADMIN</option>
+                            </select>
+                        </div>
+        
+                    </div>
+
+                    <div class="save-changes" onclick="saveUserChanges()">
+                        Save Changes
+                    </div>
+                    
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+</body>
+
+</html>
