@@ -78,30 +78,30 @@ LOCK TABLES `end_user` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `inlcuded_item`
+-- Table structure for table `included_item`
 --
 
-DROP TABLE IF EXISTS `inlcuded_item`;
+DROP TABLE IF EXISTS `included_item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `inlcuded_item` (
+CREATE TABLE `included_item` (
   `item_id` int NOT NULL,
   `auction_id` int NOT NULL,
   `description` varchar(250) DEFAULT NULL,
   `category` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`item_id`),
   KEY `auction_id` (`auction_id`),
-  CONSTRAINT `inlcuded_item_ibfk_1` FOREIGN KEY (`auction_id`) REFERENCES `posted_auction` (`auction_id`)
+  CONSTRAINT `included_item_ibfk_1` FOREIGN KEY (`auction_id`) REFERENCES `posted_auction` (`auction_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `inlcuded_item`
+-- Dumping data for table `included_item`
 --
 
-LOCK TABLES `inlcuded_item` WRITE;
-/*!40000 ALTER TABLE `inlcuded_item` DISABLE KEYS */;
-/*!40000 ALTER TABLE `inlcuded_item` ENABLE KEYS */;
+LOCK TABLES `included_item` WRITE;
+/*!40000 ALTER TABLE `included_item` DISABLE KEYS */;
+/*!40000 ALTER TABLE `included_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
