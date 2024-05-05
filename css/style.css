@@ -1,0 +1,34 @@
+html {
+    font-size: 62.5%;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: rgb(215, 215, 215)
+}
+
+.content {
+    display: flex;
+    height: inherit;
+}
+
+.search-btn-wrapper {
+    font-family: Montserrat;
+    font-size: 2rem;
+    background-color: rgb(84, 8, 84);
+    color: white;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    transition: 200ms;
+    cursor: pointer;
+}
+
+.search-btn-wrapper:hover {
+    background-color: blue;
+}
+
+.search-btn {
+    margin: auto 1.5rem;
+}

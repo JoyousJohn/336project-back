@@ -1,0 +1,132 @@
+.user-list-wrapper {
+    font-size: 2rem;
+    margin: 5rem;
+}
+
+.user-list {
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: rgb(197, 197, 197);
+    border-radius: 1rem;
+    margin-top: 1rem;
+    font-weight: 500;
+    padding-bottom: 1rem;
+
+}
+
+.user-list > div {
+    padding: 1rem;
+    transition: background-color 100ms;
+}
+
+.user-list > div:not(.list-head) {
+    border-top: 1px solid rgb(167, 167, 167);
+    cursor: pointer;
+}
+
+.list-head {
+    font-weight: bold;
+}
+
+.user-role {
+    font-size: 1.5rem;
+    border-radius: 0.8rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    margin-left: 0.5rem;
+    color: white;
+}
+
+.user-role-ADMIN {
+    background-color: orange;
+}
+
+.user-role-rep {
+    background-color: rgb(73, 37, 206);
+}
+
+.user-role-USER {
+    background-color: gray;
+}
+
+.user-hover {
+    background-color: rgb(126, 97, 213);
+}
+
+.user-management-example {
+    grid-column: span 3;
+}
+
+.managing-user, .user-management-example {
+    background-color: rgb(176, 176, 176);
+    cursor: default !important;
+}
+
+.manage-columns {
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: rgb(29, 29, 29);
+}
+
+.manage-columns > div {
+    padding-bottom: 0.2rem;
+}
+
+.manage-columns > div:not(.manage-col-selected):hover {
+    cursor: pointer;
+    border-bottom: 4px solid rgb(162, 143, 224);
+    transition: 200ms;
+}
+
+.manage-col-selected {
+    border-bottom: 4px solid rgb(109, 80, 205);
+}
+
+.manage-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) 0.5fr;
+    column-gap: 3rem;
+}
+
+.manage-info > div {
+    color: rgb(36, 36, 36);
+}
+
+.manage-info input {
+    width: 100%;
+    margin-top: 0.5rem;
+    font-size: 2rem;
+}
+
+input, input::placeholder {
+    font-family: Montserrat;
+    border: 1px solid rgb(165, 165, 165);
+    padding: 0.5rem;
+}
+
+.save-changes {
+    background-color: rgb(79, 175, 79);
+    border-radius: 0.5rem;
+    color: white;
+    padding: 1rem 2rem;
+    width: min-content;
+    white-space: nowrap;
+    font-weight: 500;
+    transition: 200ms;
+    cursor: pointer;
+}
+
+select, option {
+    font-size: 2rem;
+    font-family: Montserrat, Arial;
+    margin-top: 0.5rem;
+    background-color: white;
+    border: 1px solid rgb(165, 165, 165);
+    padding: 0.5rem;
+}
+
+.no-changes {
+    background-color: rgb(206, 62, 62);
+    cursor: default;
+}

@@ -1,0 +1,27 @@
+.none { display: none !important; }
+
+.w-full { width: 100%; }
+
+.w-half { width: 50%; }
+
+.flex { display: flex ;}
+
+.items-center { align-items: center ;}
+
+.flex-col { flex-direction: column; }
+
+.col-gap-1rem { column-gap: 1rem; }
+
+.col-gap-2rem { column-gap: 2rem; }
+
+.row-gap-1rem { row-gap: 1rem; }
+
+.mont { font-family: Montserrat; }
+
+.mb-1rem { margin-bottom: 1rem; }
+
+.mb-2rem { margin-bottom: 2rem; }
+
+.mt-3rem { margin-top: 3rem; }
+
+.ml-1rem { margin-left: 1rem; }

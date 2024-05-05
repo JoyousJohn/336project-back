@@ -1,0 +1,31 @@
+.auctions {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 3rem;
+    gap: 2rem;
+}
+
+.auction-img {
+    /* background-image: url('https://picsum.photos/500/550'); */
+    aspect-ratio: 1;
+    background-size: cover;
+    border-radius: 1rem;
+}
+
+.auction-title {
+    font-family: Montserrat;
+    font-size: 2.5rem;
+}
+
+.auction-sub-info {
+    font-family: Montserrat;
+    font-size: 2rem;
+}
+
+.auction-price {
+    font-weight: 600;
+}
+
+.auction-bidders {
+    color: rgb(66, 66, 66);
+}
