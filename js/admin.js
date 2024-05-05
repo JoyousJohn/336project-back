@@ -69,24 +69,6 @@ $(document).ready(function() {
 
 });
 
-// Implement JSP endpoint that checks if session username is "admin"
-function isAdmin() {
-
-    return true; // For now, remove this line once JSP integrated
-
-    // $.ajax({
-    //     type: 'GET',
-    //     url: 'is_admin', // change this as you wish
-    //     success: function(response) {
-    //         return response.data === 'true';
-    //     },
-    //     error: function(xhr, status, error) {
-    //         console.error('Error getting users:', error);
-    //         return 'error';
-    //     }
-    // });
-
-}
 
 // Return all users from users table and their basic data via JSP endpoint
 function getUsers() {
