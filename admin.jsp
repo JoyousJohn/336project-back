@@ -54,35 +54,138 @@
             }
         }
     } else {
-        // Query to fetch all users
-        String query = "SELECT username, name, email, role FROM end_user";
+        // Check if the request is for updating user data
+        String updateUser = request.getParameter("updateUser");
 
-        PreparedStatement ps = con.prepareStatement(query);
-        ResultSet rs = ps.executeQuery();
+        if (updateUser != null && updateUser.equals("true")) {
+            // Get user details from the request parameters
+            String username = request.getParameter("username");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            String name = request.getParameter("name");
+            String role = request.getParameter("role");
 
-        // Initialize a StringBuilder to build the response
-        StringBuilder responseBuilder = new StringBuilder();
+            // Construct the SQL update query dynamically based on provided parameters
+            StringBuilder updateQuery = new StringBuilder("UPDATE end_user SET ");
+            List<String> updateColumns = new ArrayList<>();
+            if (email != null && !email.isEmpty()) {
+                updateColumns.add("email = ?");
+            }
+            if (password != null && !password.isEmpty()) {
+                updateColumns.add("password = ?");
+            }
+            if (name != null && !name.isEmpty()) {
+                updateColumns.add("name = ?");
+            }
+            if (role != null && !role.isEmpty()) {
+                updateColumns.add("role = ?");
+            }
+            updateQuery.append(String.join(", ", updateColumns))
+                      .append(" WHERE username = ?");
 
-        while (rs.next()) {
-            // Fetch user details from the result set
-            String username = rs.getString("username");
-            String name = rs.getString("name");
-            String email = rs.getString("email");
-            String role = rs.getString("role");
+            try {
+                // Prepare the dynamic update statement
+                PreparedStatement updateStmt = con.prepareStatement(updateQuery.toString());
 
-            // Append user details to the response
-            responseBuilder.append(username).append("|")
-                           .append(name).append("|")
-                           .append(email).append("|")
-                           .append(role).append("\n");
+                // Set parameters based on provided values
+                int parameterIndex = 1;
+                if (email != null && !email.isEmpty()) {
+                    updateStmt.setString(parameterIndex++, email);
+                }
+                if (password != null && !password.isEmpty()) {
+                    updateStmt.setString(parameterIndex++, password);
+                }
+                if (name != null && !name.isEmpty()) {
+                    updateStmt.setString(parameterIndex++, name);
+                }
+                if (role != null && !role.isEmpty()) {
+                    updateStmt.setString(parameterIndex++, role);
+                }
+                // Set the username parameter
+                updateStmt.setString(parameterIndex, username);
+
+                // Execute the update statement
+                int rowsAffected = updateStmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    // Return success response
+                    out.print("success|User data updated successfully");
+                } else {
+                    // Return failure response
+                    out.print("failure|No changes were made to user data");
+                }
+            } catch (Exception e) {
+                // Print the exception stack trace
+                e.printStackTrace();
+                // Return failure response
+                out.print("failure|Error updating user data: " + e.getMessage());
+            }
+        } else {
+            // Check if the request is for deleting a user
+            String deleteUser = request.getParameter("deleteUser");
+
+            if (deleteUser != null && deleteUser.equals("true")) {
+                // Get the username of the user to be deleted from the request parameters
+                String usernameToDelete = request.getParameter("username");
+
+                // Check if the username is provided
+                if (usernameToDelete != null && !usernameToDelete.isEmpty()) {
+                    try {
+                        // Prepare a SQL query to delete the user from the database
+                        PreparedStatement deleteStmt = con.prepareStatement("DELETE FROM end_user WHERE username = ?");
+                        deleteStmt.setString(1, usernameToDelete);
+
+                        // Execute the delete statement
+                        int rowsAffected = deleteStmt.executeUpdate();
+
+                        // Check if the user was successfully deleted
+                        if (rowsAffected > 0) {
+                            // Return success response
+                            out.print("success|User deleted successfully");
+                        } else {
+                            // Return failure response if the user was not found
+                            out.print("failure|User not found");
+                        }
+                    } catch (SQLException e) {
+                        // Handle any database errors
+                        e.printStackTrace();
+                        out.print("failure|Error deleting user: " + e.getMessage());
+                    }
+                } else {
+                    // Return failure response if username is not provided
+                    out.print("failure|Username not provided");
+                }
+            } else {
+                // Query to fetch all users
+                String query = "SELECT username, name, email, role FROM end_user";
+
+                PreparedStatement ps = con.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                // Initialize a StringBuilder to build the response
+                StringBuilder responseBuilder = new StringBuilder();
+
+                while (rs.next()) {
+                    // Fetch user details from the result set
+                    String username = rs.getString("username");
+                    String name = rs.getString("name");
+                    String email = rs.getString("email");
+                    String role = rs.getString("role");
+
+                    // Append user details to the response
+                    responseBuilder.append(username).append("|")
+                                   .append(name).append("|")
+                                   .append(email).append("|")
+                                   .append(role).append("\n");
+                }
+
+                // Close resources
+                rs.close();
+                ps.close();
+
+                // Send back the response
+                out.print(responseBuilder.toString());
+            }
         }
-
-        // Close resources
-        rs.close();
-        ps.close();
-
-        // Send back the response
-        out.print(responseBuilder.toString());
     }
 
     con.close();

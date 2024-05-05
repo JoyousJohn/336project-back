@@ -1,33 +1,32 @@
-$(document).ready(function() {
-    let selectedUser; // Holds the currently selected user
-    let users; // Define users at a higher scope
+let selectedUser; // Holds the currently selected user
+let users; // Define users at a higher scope
 
-    // Fetch real users from the server
-    getUsers();
-
-    // Function to fetch users from the server
-    function getUsers() {
-        $.ajax({
-            type: 'GET',
-            url: 'admin.jsp',
-            success: function(response) {
-                if (response.startsWith("failure")) {
-                    console.error('Error getting users:', response.split('|')[1]);
-                    return;
-                }
-                if (!response) {
-                    console.error('Empty response received from the server');
-                    return;
-                }
-                // Process the response text to extract user data
-                users = parseUsers(response);
-                displayUsers(users); // Call a function to display users
-            },
-            error: function(xhr, status, error) {
-                console.error('Error getting users:', error);
+function getUsers() {
+    $.ajax({
+        type: 'GET',
+        url: 'admin.jsp',
+        success: function(response) {
+            console.log('Success:', response); // Log the response
+            if (response.startsWith("failure")) {
+                console.error('Error getting users:', response.split('|')[1]);
+                return;
             }
-        });
-    }
+            if (!response) {
+                console.error('Empty response received from the server');
+                return;
+            }
+            // Process the response text to extract user data
+            users = parseUsers(response);
+            displayUsers(users); // Call a function to display users
+        },
+        error: function(xhr, status, error) {
+            console.error('Error getting users:', error);
+        }
+    });
+}
+
+    
+        
 
     // Function to parse user data from plain text response
     function parseUsers(response) {
@@ -49,35 +48,27 @@ $(document).ready(function() {
         });
         return userList;
     }
-
+    
+    
+    
     // Function to display users received from the server
     function displayUsers(usersData) {
-        $('.user-list').empty(); // Clear existing user list
-        usersData.forEach(function(user) {
-            const $userElm = `
-                <div username="${user.username}">${user.username}<span class="user-role user-role-${user.role.toLowerCase()}">${user.role}</span></div>
-                <div username="${user.username}">${user.name}</div>
-                <div username="${user.username}">${user.email}</div>
-            `;
-            $('.user-list').append($userElm);
-        });
-        $('.manage-users').text(`Manage users (${usersData.length})`); // Update the manage users count
-    }
+    $('.user-list').empty(); // Clear existing user list
+    usersData.forEach(function(user) {
+        const $userElm = `
+            <div username="${user.username}">${user.username}<span class="user-role user-role-${user.role.toLowerCase()}">${user.role}</span></div>
+            <div username="${user.username}">${user.name}</div>
+            <div username="${user.username}">${user.email}</div>
+        `;
+        $('.user-list').append($userElm);
+    });
+    $('.manage-users').text(`Manage users (${usersData.length})`); // Update the manage users count
 
-    // Highlight in blue on hover
-    $('.user-list > div:not(.list-head)').hover(function() {
+    // Reapply event binding for click event on user list items
+    $('.user-list > div:not(.list-head)').off('click').on('click', function() {
         const name = $(this).attr('username')
-        $(`div[username="${name}"]`).addClass('user-hover')
-    }, function() {
-        const name = $(this).attr('username')
-        $(`div[username="${name}"]`).removeClass('user-hover')
-    })
-
-    // Show user management options when a user is clicked
-    $('.user-list > div:not(.list-head)').click(function() {
-        const name = $(this).attr('username')
-        if (selectedUser && name === selectedUser.username) return
-
+        if (selectedUser && name === selectedUser.username) return;
+        console.log(name);
         $('.managing-user').removeClass('managing-user')
         selectedUser = users.find(user => user.username === name)
         $(`div[username="${name}"]`).addClass('managing-user')
@@ -105,6 +96,22 @@ $(document).ready(function() {
 
     })
 
+    	
+    }
+    
+$(document).ready(function() {
+
+    // Fetch real users from the server
+    getUsers();
+
+    // Highlight in blue on hover
+    $('.user-list > div:not(.list-head)').hover(function() {
+        $(this).addClass('user-hover');
+    }, function() {
+        $(this).removeClass('user-hover');
+    });
+
+ 
     $('.user-management-example').hide();
 
     // If error message telling user they didn't change anything is showing, clear it and reset the button to "Save changes"
@@ -140,41 +147,53 @@ $(document).ready(function() {
         $(`.${managing}-wrap`).show().removeClass('none');
     })
 
+    // Delete user button click event
     $('.delete-user-btn').click(function() {
-        const isConfirming = $(this).hasClass('delete-confirming') // require a 2nd confirmation 
-        // Ask admin/rep to confirm first
-        if (!isConfirming) {
-            $(this).text('Confirm Deletion').addClass('delete-confirming')
-            $('.no-undone').removeClass('none').hide().fadeIn('fast');
-            return
+        const username = selectedUser.username;
+        const confirmed = confirm("Are you sure you want to delete this user?");
+        if (confirmed) {
+            deleteUser(username);
         }
-        // Actually delete the user
-        else {
-            $(this).text('Deleting user...').css('cursor', 'default')
-            deleteUser(selectedUser.username)
-        }
-    })
+    });
     
+    // Create new user button click event
     $('.create-user-confirm').click(createNewUser);
+
+    // Save changes button click event
+    $('.save-changes').click(saveUserChanges);
+
 
 })
 
-// Delete this user from SQL via POST request.
+// Function to delete a user via AJAX
 function deleteUser(username) {
-    $.ajax({
-        type: 'POST',
-        url: 'admin.jsp', // change this as you wish
-        data: { deleteUsername: username }, // Modified to pass username in data
-        success: function(response) {
-            // alert("User successfully deleted!") // For now just show an alert, will add some absolute/fixed button later
-            $(`div[username="${username}"]`).remove();
-            $('.user-management-example').slideUp();
-        },
-        error: function(xhr, status, error) {
-            console.error('Error deleting user:', status);
-            $('.delete-user-btn').text('Error deleting user: ' +  status)
-        }
-    });
+    if (confirm("Are you sure you want to delete this user?")) {
+        // Send AJAX request to delete the user
+        $.ajax({
+            type: "POST",
+            url: "admin.jsp",
+            data: {
+                deleteUser: "true",
+                username: username
+            },
+            success: function(response) {
+                // Handle success response
+                var responseParts = response.split("|");
+                if (responseParts[0] === "success") {
+                    alert(responseParts[1]); // Display the success message
+                    // Reload the page after successful deletion
+                    getUsers();
+                } else {
+                    alert(responseParts[1]); // Display the error message
+                }
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+                console.error("Error deleting user: " + error);
+                alert("Error deleting user. Please try again later.");
+            }
+        });
+    }
 }
 
 
@@ -263,73 +282,64 @@ function postNewUser(newUser) {
 
 }
 
-// Send changes to username, email, password, and/or role to server
 function saveUserChanges() {
+    const newUsername = $('.change-username-input').val();
+    const newName = $('.change-name-input').val();
+    const newEmail = $('.change-email-input').val();
+    const newPassword = $('.change-password-input').val();
+    const newRole = $('.change-role-input').val();
 
-    const newUsername = $('.change-username-input').val()
-    const newName = $('.change-name-input').val()
-    const newEmail = $('.change-email-input').val()
-    const newPassword = $('.change-password-input').val()
-    const newRole = $('.change-role-input').val()
-
-    let changes = {}
+    let changes = {};
 
     // Only add user attributes that actually changed to the object that will be sent to server
-    // Don't set the attributes if they're the same to the current one
+    // Don't set the attributes if they're the same as the current one
     if (newUsername && newUsername !== selectedUser.username) {
-        changes['username'] = newUsername
+        changes['username'] = newUsername;
     }
     if (newName && newName !== selectedUser.name) {
-        changes['name'] = newName
+        changes['name'] = newName;
     }
-    if(newEmail && newEmail !== selectedUser.email) {
-        changes['email'] = newEmail
+    if (newEmail && newEmail !== selectedUser.email) {
+        changes['email'] = newEmail;
     }
-    if(newPassword && newPassword !== selectedUser.password) {
-        changes['password'] = newPassword
+    if (newPassword && newPassword !== selectedUser.password) {
+        changes['password'] = newPassword;
     }
-    if(newRole && newRole.toUpperCase() !== selectedUser.role) {
-        changes['role'] = newRole
+    if (newRole && newRole.toUpperCase() !== selectedUser.role) {
+        changes['role'] = newRole;
     }
 
-    // Prints only the changed properties in console
-    console.table(changes)
-
-    // If no changes tell the user they didn't change anything
+    // If no changes, tell the user they didn't make any changes
     if (Object.keys(changes).length === 0) {
-        $('.save-changes').text("You didn't make any changes!").addClass('no-changes')
-        return
+        $('.save-changes').text("You didn't make any changes!").addClass('no-changes');
+        return;
     }
 
-    // Else, make an ajax post request to server with the new data!!
-    postUserChanges(changes)
-
+    // Make an AJAX POST request to the server with the new data
+    postUserChanges(selectedUser.username, changes);
 }
 
-// MAKE A POST REQUEST TO JSP WITH OBJECT HOLDING USER ATTRIBUTES TO CHANGE!
-// It only holds keys of the attributes that were actually changed, so make sure to loop them - don't change all!
-// For example, if only username and name was changed, changesObj would be { 'username': 'newusername', 'name': 'newname' }
-function postUserChanges(changesObj) {
-
-    console.log(changesObj)
-    // Prints something like: Object { username: "newusername", email: "newemail", role: "admin" } with whatever data was changed
-
+// Make a POST request to update user data on the server
+function postUserChanges(username, changesObj) {
     $.ajax({
         type: 'POST',
-        url: 'admin.jsp', // change this as you wish
-        data: JSON.stringify(changesObj),
-        contentType: 'application/json',
-
+        url: 'admin.jsp',
+        data: Object.assign({ updateUser: 'true', username: username }, changesObj), // Combine objects
         success: function(response) {
-            console.log('User data changed successfully!');
-            // Change the button with the confirmation message
-            $('.save-changes').text(response.message) // response.something, depends how you implement it
+            if (response.includes("success")) {
+                // Optionally, you can refresh the user list after successful update
+                location.reload();
+
+            } else if (response.startsWith("failure")) {
+                var responseData = response.split("|");
+                alert("Failed to update user data: " + responseData[1]);
+            } else {
+                alert("Unexpected response from server.");
+            }
         },
         error: function(xhr, status, error) {
             console.error('Error changing user data:', error);
-            // Show the error on the button if there was one
-            $('.save-changes').text(status).addClass('.no-change')
+            alert('Error: Unable to save changes');
         }
     });
-
 }
