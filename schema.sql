@@ -253,7 +253,7 @@ CREATE TABLE `posted_auction` (
   `seller_id` int NOT NULL,
   `when_closes` datetime DEFAULT NULL,
   `description` varchar(250) DEFAULT NULL, -- Updated to serve as the description for both auction and item
-  `status` varchar(50) DEFAULT NULL,
+  `status` varchar(50) DEFAULT 'Open',
   `bid_increment` int DEFAULT NULL,
   `reserve` int DEFAULT NULL,
   `imageCount` int DEFAULT NULL,
