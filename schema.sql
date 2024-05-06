@@ -255,6 +255,7 @@ CREATE TABLE `posted_auction` (
   `description` varchar(250) DEFAULT NULL, -- Updated to serve as the description for both auction and item
   `status` varchar(50) DEFAULT NULL,
   `bid_increment` int DEFAULT NULL,
+  `reserve` int DEFAULT NULL,
   `imageCount` int DEFAULT NULL,
   PRIMARY KEY (`auction_id`),
   KEY `seller_id` (`seller_id`),
