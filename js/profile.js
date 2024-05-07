@@ -1,75 +1,46 @@
 $(document).ready(function() {
 
-    populateListings(); 
+	let username;
+	
+	getUsername(function(u) {
+
+
+		if (u === 'undefined') {
+			cl(`[profile.js] User is not logged in (received username: ${u}), sending to index.html!`); 
+			sendToPage('login');
+			username = u;
+		} 
+		
+		else {
+			
+			populateInfo()
+					
+		    populateListings(); 
+			
+		}
+		
+
+	});
+		
+	
     
 });
 
-
-// Update isLoggedIn function to handle errors more effectively and provide feedback to the user
-function isLoggedIn() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            type: "GET",
-            url: "checkLoginStatus.jsp",
-            headers: { "cache-control": "no-cache" },
-            success: function(response) {
-                const [loggedIn, username, role] = response.trim().split("|");
-                const isLoggedInStatus = loggedIn === "true";
-                console.log("Role:", role); // Log the role
-                resolve({ loggedIn: isLoggedInStatus, username: username, role: role });
-            },
-            error: function(xhr, status, error) {
-                console.error("Error checking login status:", error);
-                reject("Error checking login status");
-            }
-        });
-    });
+function populateInfo() {
+	
+	
+	getSessionAtr(function(sa) {
+		
+		console.log(sa)
+		
+		$('.profile-username').text(sa.username);
+		$('.profile-email').text(sa.username);
+		
+	})
+	
 }
-/*
-function updateSidebar() {
-    isLoggedIn().then((result) => {
-        const { loggedIn, username, role } = result;
-        const profileLink = $('#profileLink');
-        const sellLink = $('.sidebar-sell');
-        const adminLink = $('.sidebar-admin');
-        const exploreLink = $('.sidebar-explore');
 
-        if (loggedIn) {
-            // User is logged in
-            profileLink.attr('href', 'profile.html');
-            sellLink.attr('href', 'sell.html');
 
-            if (role === 'ADMIN') {
-                adminLink.attr('href', 'admin.html');
-            } else {
-                adminLink.attr('href', 'javascript:void(0)');
-                adminLink.off('click');
-                adminLink.on('click', function(event) {
-                    event.preventDefault();
-                    alert("You are not authorized to access the admin page.");
-                });
-            }
-            // Update the Explore link to point to index.html
-            exploreLink.attr('href', 'index.html');
-                        
-        } else {
-            // User is not logged in
-            profileLink.attr('href', 'login.html');
-            sellLink.attr('href', 'javascript:void(0)');
-            adminLink.attr('href', 'javascript:void(0)');
-            adminLink.off('click');
-            adminLink.on('click', function(event) {
-                event.preventDefault();
-                alert("Please log in to access the admin page.");
-            });
-            // Update the Explore link to point to index.html
-            exploreLink.attr('href', 'index.html');
-        }
-    }).catch((error) => {
-        console.error("Error updating sidebar:", error);
-    });
-}
-*/
 
 // Function that populates "Your listings" in profile
 function populateListings() {

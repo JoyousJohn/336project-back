@@ -194,6 +194,8 @@ let auction = [
 let auctions = []
 const amntOfSampleAuctions = 27
 
+let sessionUsername
+
 $(document).ready(function() {
     
     updateSidebar(); // Call the function to update sidebar links
@@ -207,21 +209,33 @@ $(document).ready(function() {
     $('.sidebar-logout').click(function() {
     // Perform logout action here
     $.ajax({
-      url: 'logout.jsp',
-      type: 'POST',
-      success: function(response) {
-        // Handle successful logout
-        console.log('Logout successful');
-        // Optionally, you can redirect the user or perform other actions
-        window.location.href = 'index.html'
-      },
-      error: function(xhr, status, error) {
-        // Handle error
-        console.error('Logout error:', error);
-      }
-    });
-  });
+	      url: 'logout.jsp',
+	      type: 'POST',
+	      success: function(response) {
+	        // Handle successful logout
+	        console.log('Logout successful');
+	        // Optionally, you can redirect the user or perform other actions
+	        window.location.href = 'index.html'
+	      },
+	      error: function(xhr, status, error) {
+	        // Handle error
+	        console.error('Logout error:', error);
+	      }
+	    });
+	});
+	
+	$.get('get-username.jsp', function(data) {
+		sessionUsername = data
+	});
 
 });
+
+function sendToPage(page) {
+	window.location.href = `${page}.html`
+}
+
+function cl(input_) {
+	console.log(input_)
+}
 
 

@@ -51,8 +51,8 @@ function getUsers() {
     
     
     
-    // Function to display users received from the server
-    function displayUsers(usersData) {
+// Function to display users received from the server
+function displayUsers(usersData) {
     $('.user-list').empty(); // Clear existing user list
     usersData.forEach(function(user) {
         const $userElm = `
