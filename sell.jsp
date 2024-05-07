@@ -57,7 +57,7 @@ try {
 
     // sellerId is the same as userId since the currently logged in user is creating the auction
     // and the auction doesn't exist in the database yet
-    int sellerId = (int) session.getAttribute("userId");
+    int sellerId = (int) session.getAttribute("user_id");
 
     // Verify that the seller ID exists in the end_user table
     String verifySellerQuery = "SELECT COUNT(*) FROM end_user WHERE user_id = ?";
@@ -75,7 +75,7 @@ try {
     int auctionId = (int) (Math.random() * (100000 - 10 + 1)) + 10;
 
     // Insert new listing into the posted_auction table
-    String query = "INSERT INTO posted_auction (auction_id, seller_id, when_closes, description, bid_increment, reserve, imageCount) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    String query = "INSERT INTO posted_auction (auction_id, seller_id, when_closes, description, bid_increment, reserve, imageCount, title) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     stmt = con.prepareStatement(query);
     stmt.setInt(1, auctionId);
     stmt.setInt(2, sellerId);
@@ -84,6 +84,7 @@ try {
     stmt.setDouble(5, bidIncrement); // Convert bidIncrement to double
     stmt.setDouble(6, reserve); // Convert reserve to double
     stmt.setInt(7, imageCount); // Convert imageCount to integer
+    stmt.setString(8, title); // Convert imageCount to integer
 
     // Execute the query
     int rowsAffected = stmt.executeUpdate();

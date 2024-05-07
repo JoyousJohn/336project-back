@@ -44,38 +44,44 @@ function populateInfo() {
 
 // Function that populates "Your listings" in profile
 function populateListings() {
-    const userListings = getListings();
-
+	
     let i = 0;
 
-    userListings.forEach(listing => {
+    getAuctions(function(userListings) { 
+		
+		console.log(userListings)
+		
+		for (let listing in userListings) {
 
-        let $thisListing = $('.template-item').clone().removeClass('template-item');
+			listing = userListings[listing]
 
-        $thisListing.find('.listing-title').text(listing.title);
+	        let $thisListing = $('.template-item').clone().removeClass('template-item');
+	
+	        $thisListing.find('.listing-title').text(listing.title);
+	
+	        /*let listingType;
+	        if (listing.type === 'auction' && listing.active === true) {
+	            listingType = 'Active auction';
+	        } else if (listing.type === 'bin') {
+	            listingType = 'Buy it now';
+	        }
+	        $thisListing.find('.listing-type').text(listingType);
+	
+	        $thisListing.find('.listing-time-remaining').text(listing.remaining + ' remaining');
+	
+	        $thisListing.find('.listing-price').text('$' + listing.winningPrice);
+	
+	        $thisListing.find('.listing-bids').text(listing.bids.length + ' bids');
+	
+	        $thisListing.find('.listing-stats').text(listing.views + ' views | ' + listing.favorites + ' favorites');*/
+	
+	        $thisListing.find('.listing-img').css('background-image', `url('https://picsum.photos/500/550?${i}')`);
+	
+	        $('.listings-list > :last-child').before($thisListing);
+	        
+	        i++;
 
-        let listingType;
-        if (listing.type === 'auction' && listing.active === true) {
-            listingType = 'Active auction';
-        } else if (listing.type === 'bin') {
-            listingType = 'Buy it now';
-        }
-        $thisListing.find('.listing-type').text(listingType);
-
-        $thisListing.find('.listing-time-remaining').text(listing.remaining + ' remaining');
-
-        $thisListing.find('.listing-price').text('$' + listing.winningPrice);
-
-        $thisListing.find('.listing-bids').text(listing.bids.length + ' bids');
-
-        $thisListing.find('.listing-stats').text(listing.views + ' views | ' + listing.favorites + ' favorites');
-
-        $thisListing.find('.listing-img').css('background-image', `url('https://picsum.photos/500/550?${i}')`);
-
-        $('.listings-list > :last-child').before($thisListing);
-        
-        i++;
-
+    	};
     });
 }
 
