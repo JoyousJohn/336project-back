@@ -7,7 +7,6 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="js/utils.js"></script>
-    <script src="js/profile.js"></script>
     <script src="js/sell.js"></script>
 
     <link href="https://fonts.cdnfonts.com/css/richela-kids" rel="stylesheet">
@@ -24,14 +23,15 @@
 
         <div class="sidebar-top">
             <div class="sidebar-logo">ShoeBae</div>
-			<a href="index.html" class="sidebar-item sidebar-explore"><i class="fa-solid fa-house"></i>Explore</a>
-			<a href="#" class="sidebar-item sidebar-profile" id="profileLink">
-			    <i class="fa-solid fa-user"></i><span class="txt">Profile</span>
-			</a>  
-		    <a href="sell.html" class="sidebar-item sidebar-sell sidebar-selected" id="sellLink">
-			    <i class="fa-solid fa-shop"></i><span class="txt">Sell</span>
-			</a>
-			<a href="admin.html" class="sidebar-item sidebar-admin" id="adminLink"><i class="fa-solid fa-user-tie"></i>Admin</a>		</div>
+            <a href="index.html" class="sidebar-item sidebar-explore"><i class="fa-solid fa-house"></i>Explore</a>
+            <a href="#" class="sidebar-item sidebar-profile" id="profileLink">
+                <i class="fa-solid fa-user"></i><span class="txt">Profile</span>
+            </a>  
+            <a href="sell.html" class="sidebar-item sidebar-sell sidebar-selected" id="sellLink">
+                <i class="fa-solid fa-shop"></i><span class="txt">Sell</span>
+            </a>
+            <a href="admin.html" class="sidebar-item sidebar-admin" id="adminLink"><i class="fa-solid fa-user-tie"></i>Admin</a>
+        </div>
 
         <div class="sidebar-bottom">
             <div class="sidebar-item"><i class="fa-solid fa-circle-question"></i>Support</div>
@@ -48,11 +48,9 @@
 
                 <div class="mb-1rem">Enter item details</div>
 
-                <form>
-
-                    <input type="text" class="sell-title" placeholder="Title">
-
-                    <select class="sell-category-select mont">
+                <form action="sell.jsp" method="post"> <!-- Updated form tag -->
+                    <input type="text" name="sell-title" id="sell-title" placeholder="Title">
+                    <select name="sell-category" id="sell-category" class="sell-category-select mont">
                         <option value="" disabled selected>Shoe category</option>
                         <option value="running">Running</option>
                         <option value="hiking">Hiking</option>
@@ -62,63 +60,50 @@
                         <option value="boots">Boots</option>
                         <option value="sandals">Sandals</option>
                     </select>
-
-                    <input type="text" class="sell-description" placeholder="Description">
-
+                    <input type="text" name="sell-description" id="sell-description" placeholder="Description">
                     <div class="listing-type">
                         <div class="type-auction">Auction</div>
                         <div class="type-bin">Buy it Now</div>
                     </div>
-
                     <div class="auction-inputs none w-full flex flex-col row-gap-1rem">
                         <div class="flex items-center">
-                            $ <input type="text" class="sell-auc-price w-full ml-1rem" placeholder="Start price">
+                            $ <input type="text" name="sell-auc-price" class="sell-auc-price w-full ml-1rem" placeholder="Start price">
                         </div>
                         <div class="flex items-center">
-                            $ <input type="text" class="sell-reserve w-full ml-1rem" placeholder="Reserve (optional)">
+                            $ <input type="text" name="sell-increment" class="sell-increment w-full ml-1rem" placeholder="Increment (optional)">
+                        </div>
+                        <div class="flex items-center">
+                            $ <input type="text" name="sell-reserve" class="sell-reserve w-full ml-1rem" placeholder="Reserve (optional)">
                         </div>
                     </div>
-
                     <div class="bin-inputs none w-full flex flex-col row-gap-1rem">
                         <div class="flex items-center">
-                            $ <input type="text" class="sell-bin-price w-full ml-1rem" placeholder="Price">
+                            $ <input type="text" name="sell-bin-price" class="sell-bin-price w-full ml-1rem" placeholder="Price">
                         </div>
                     </div>
-
                     <div class="flex items-center sell-end none">
                         <span style="white-space: nowrap;">End date:</span>
-                        <input type="datetime-local" class="sell-end-date w-full ml-1rem">
+                        <input type="datetime-local" name="sell-end-date" class="sell-end-date w-full ml-1rem">
                     </div>
-
                 </form>
 
             </div>
-            
             <div class="sell-images">
-
                 <div class="mont mb-1rem">Add up to 8 images</div>
                 <div class="sell-image-wrapper">
+                    <!-- Input element for file upload -->
+                    <input type="file" class="sell-image-input" style="display: none;" accept="image/*">
+                    <!-- Add Image button -->
                     <div class="sell-add-image">+</div>
                 </div>
-
             </div>
-
         </div>
 
         <div class="flex content-center mt-3rem">
             <div class="publish mont" onclick="publish()">PUBLISH</div>
         </div>
-
     </div>
-
 </div>
 
-<script>
-    $(document).ready(function() {
-        updateSidebar(); // Call the function when the document is ready
-    });
-</script>
-
 </body>
-
 </html>

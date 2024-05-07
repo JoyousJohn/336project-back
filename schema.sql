@@ -60,7 +60,7 @@ CREATE TABLE `end_user` (
   `user_id` int NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `name` varchar(5) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
   `role` varchar(15) DEFAULT NULL,
   `prev_auctions` varchar(50) DEFAULT NULL,
@@ -194,7 +194,7 @@ DROP TABLE IF EXISTS `included_item`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `included_item` (
-  `item_id` int NOT NULL AUTO_INCREMENT,
+  `item_id` int NOT NULL,
   `auction_id` int NOT NULL,
   `category` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`item_id`),
@@ -249,13 +249,13 @@ DROP TABLE IF EXISTS `posted_auction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `posted_auction` (
-  `auction_id` int NOT NULL AUTO_INCREMENT,
+  `auction_id` int NOT NULL,
   `seller_id` int NOT NULL,
   `when_closes` datetime DEFAULT NULL,
-  `description` varchar(250) DEFAULT NULL, -- Updated to serve as the description for both auction and item
+  `description` varchar(250) DEFAULT NULL, 
   `status` varchar(50) DEFAULT 'Open',
-  `bid_increment` int DEFAULT NULL,
-  `reserve` int DEFAULT NULL,
+  `bid_increment` double DEFAULT NULL,
+  `reserve` double DEFAULT NULL,
   `imageCount` int DEFAULT NULL,
   PRIMARY KEY (`auction_id`),
   KEY `seller_id` (`seller_id`),
@@ -283,5 +283,3 @@ UNLOCK TABLES;
 
 -- Dump completed on 2024-04-14 20:57:06
 
-insert into end_user values (user_id, username, password, name, email, role, prev_auctions), (1,'user', 'pass', 'tati', 'email', 'ADMIN', NULL);
-select * from end_user; 

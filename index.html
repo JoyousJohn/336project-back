@@ -6,22 +6,18 @@
     <link rel="stylesheet" href="css/sidebar.css">
     <link rel="stylesheet" href="css/explore.css">
     <link rel="stylesheet" href="css/alert.css">
+    
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     
     <script src="js/utils.js"></script>
-    <script src="js/profile.js"></script>
-    
-    
-    <script src="js/rand.js"></script>
-    <script src="js/example.js"></script>
+    <script src="js/explore.js"></script>
     <script src="js/alerts.js"></script>
-    
+
     <link href="https://fonts.cdnfonts.com/css/richela-kids" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/it-encore-sans" rel="stylesheet">
     <script src="https://kit.fontawesome.com/9fec56898e.js" crossorigin="anonymous"></script>
-
 </head>
 
 <body>
@@ -59,7 +55,7 @@
                 <span class="search-btn">Search</span>
             </div>
 
-            <div class="navbar-bell">
+            <div class="navbar-bell none">
                 
                 <i class="fa-solid fa-bell"></i>
 
@@ -100,27 +96,19 @@
         </div>
 
         <div class="auctions">
-
-            <div class="auction-template none">
-
-                <div class="auction-img"></div>
-                <div class="auction-title">Example auction</div>
-                <div class="auction-sub-info"><span class="auction-price">$57.57</span> | <span class="auction-bidders"></span></div>
-
-            </div>
-
+            <!-- No auctions to display -->
         </div>
-
-    </div>
-
-</div>
-
+        
 <script>
+    // Fetch and display listings when the page loads
     $(document).ready(function() {
         updateSidebar(); // Call the function when the document is ready
+
     });
 </script>
 
 </body>
 
 </html>
+
+    

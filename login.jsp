@@ -10,8 +10,8 @@
     String username = request.getParameter("username");
     String password = request.getParameter("password");
 
-    // Query to check if the user exists and retrieve user details
-    String query = "SELECT username, email, role " +
+    // Query to check if the user exists and retrieve user details including user ID
+    String query = "SELECT user_id, username, email, role " +
                    "FROM end_user " +
                    "WHERE username = ? AND password = ?";
     
@@ -22,12 +22,14 @@
     ResultSet rs = ps.executeQuery();
 
     if (rs.next()) {
-        // Fetch user details from the result set
+        // Fetch user details including user ID from the result set
+        int userId = rs.getInt("user_id");
         String fetchedUsername = rs.getString("username");
         String email = rs.getString("email");
         String role = rs.getString("role");
 
-        // Set the session attributes
+        // Set the session attributes including user ID
+        session.setAttribute("userId", userId);
         session.setAttribute("username", fetchedUsername);
         session.setAttribute("email", email);
         session.setAttribute("loggedIn", true); // Set loggedIn attribute to true
