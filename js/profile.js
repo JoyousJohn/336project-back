@@ -1,8 +1,9 @@
 $(document).ready(function() {
 
-    populateListings();
+    populateListings(); 
+    
+});
 
-})
 
 // Update isLoggedIn function to handle errors more effectively and provide feedback to the user
 function isLoggedIn() {
@@ -24,7 +25,7 @@ function isLoggedIn() {
         });
     });
 }
-
+/*
 function updateSidebar() {
     isLoggedIn().then((result) => {
         const { loggedIn, username, role } = result;
@@ -50,6 +51,7 @@ function updateSidebar() {
             }
             // Update the Explore link to point to index.html
             exploreLink.attr('href', 'index.html');
+                        
         } else {
             // User is not logged in
             profileLink.attr('href', 'login.html');
@@ -67,7 +69,7 @@ function updateSidebar() {
         console.error("Error updating sidebar:", error);
     });
 }
-
+*/
 
 // Function that populates "Your listings" in profile
 function populateListings() {

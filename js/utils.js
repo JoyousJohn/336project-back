@@ -22,8 +22,11 @@ function isLoggedIn() {
 }
 
 function updateSidebar() {
+		
     return new Promise((resolve, reject) => {
+		
         isLoggedIn().then((result) => {
+						
             const { loggedIn, username, role, userId } = result;
             const profileLink = $('#profileLink');
             const sellLink = $('.sidebar-sell');
@@ -47,6 +50,9 @@ function updateSidebar() {
                 }
                 // Update the Explore link to point to index.html
                 exploreLink.attr('href', 'index.html');
+
+                $('.sidebar-logout').removeClass('none')
+                
             } else {
                 // User is not logged in
                 exploreLink.attr('href', 'index.html');
@@ -190,13 +196,31 @@ const amntOfSampleAuctions = 27
 
 $(document).ready(function() {
     
-	updateSidebar(); // Call the function to update sidebar links
+    updateSidebar(); // Call the function to update sidebar links
 
     // Add click event listener to the auction titles
     $('.auction-title').on('click', function() {
         const uuid = $(this).parent().attr('data-uuid');
         window.location.href = `item.html?uuid=${uuid}`;
     });
+    
+    $('.sidebar-logout').click(function() {
+    // Perform logout action here
+    $.ajax({
+      url: 'logout.jsp',
+      type: 'POST',
+      success: function(response) {
+        // Handle successful logout
+        console.log('Logout successful');
+        // Optionally, you can redirect the user or perform other actions
+        window.location.href = 'index.html'
+      },
+      error: function(xhr, status, error) {
+        // Handle error
+        console.error('Logout error:', error);
+      }
+    });
+  });
 
 });
 

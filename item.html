@@ -1,0 +1,126 @@
+<html>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/wind.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/item.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+    <script src="js/utils.js"></script>
+    <script src="js/item.js"></script>
+
+    <link href="https://fonts.cdnfonts.com/css/richela-kids" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/it-encore-sans" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9fec56898e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="content">
+
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+            <div class="sidebar-logo">ShopBay</div>
+            <a href="index.html"><div class="sidebar-item sidebar-explore"><i class="fa-solid fa-house"></i>Explore</div></a>
+            <div class="sidebar-item sidebar-selected"><i class="fa-solid fa-bag-shopping"></i>Viewing</div>
+            <a href="profile.html"><div class="sidebar-item sidebar-profile"><i class="fa-solid fa-user"></i><span class="txt">Profile</span></div></a>
+            <a href="sell.html"><div class="sidebar-item sidebar-sell"><i class="fa-solid fa-shop"></i>Sell</div></a>
+            <a href="admin.html"><div class="sidebar-item sidebar-admin"><i class="fa-solid fa-user-tie"></i>Admin</div></a>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-item"><i class="fa-solid fa-circle-question"></i>Support</div>
+            <div class="sidebar-item sidebar-logout none"><i class="fa-solid fa-arrow-right-from-bracket"></i>Logout</div>
+            <div class="sidebar-item"><i class="fa-solid fa-gear"></i>Settings</div>
+        </div>
+
+    </div>
+
+    <div class="main">
+
+        <div class="listing-wrapper">
+
+            <div class="images flex flex-col">
+                <div class="main-image"></div>
+                <div class="img-gallery">
+
+                </div>
+            </div>
+
+            <div class="listing-right flex flex-col mont">
+                <div class="listing-title"></div>
+
+                <div class="listing-price-wrapper">
+
+                    <div class="flex items-center">
+                        <div class="winning-price"></div>
+                        <div class="reserve-not-met ml-1rem">| Reserve not met</div>
+                    </div>
+                    
+                    <div class="flex flex-row">
+                        <div class="bids-count"></div> 
+                        <div class="ends-in"></div>
+                    </div>
+
+                </div>
+
+                <div class="listing-condition-wrap">Condition:
+                    <span class="listing-condition"></span>
+                     | Category:
+                    <span class="listing-category"></span>
+                     | Seller:
+                    <a class="listing-seller"></a>
+                </div>
+
+                <div>
+                    <div class="bid-wrapper col-gap-1rem">
+
+                        <form class="m-0">
+                            <input class="bid-price-input p-1rem" type="text" placeholder="$">
+                        </form>
+                        <div class="place-bid p-1rem" onclick="placeBid();">Place Bid</div>
+    
+                    </div>
+                    <div class="secret-bidding-word">→ Enable secret bidding (optional)</div>
+
+                    <div class="secret-bidding-wrapper none">
+                        <form class="m-0 mt-1rem">
+                            <span>Upper limit:</span>
+                            <input class="secret-upper-limit p-1rem" type="text" placeholder="$">
+                        </form>
+                        <form class="mt-1rem mb-0">
+                            <span>Increment:</span>
+                            <input class="secret-increment p-1rem" type="text" placeholder="$">
+                        </form>
+                    </div>
+
+                </div>
+                
+                <div class="missing-inputs none">Please enter all values!</div>
+
+                <div class="listing-description"></div>
+
+                <div class="bid-breakdown">
+
+                    <div class="bid-history-title">Bid history</div>
+
+                    <div class="bold-500">Bidder</div>
+                    <div class="bold-500">Bid</div>
+                    <div class="bold-500">Time</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
