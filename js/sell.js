@@ -28,48 +28,27 @@ $(document).ready(function() {
 
     })
 
-    // Function to increment image count and update UI
-    function incrementImageCount() {
-        imageCount++;
-        // Update UI to show the current image count
-        $('.image-count').text(`Image Count: ${imageCount}`);
-        console.log(imageCount);
-    }
-    
     $('.sell-add-image').click(function() {
-        // Trigger file explorer when the '+' button is clicked
-        $('.sell-image-input').click();
-    });
 
-    // Handle file input change event
-    $('.sell-image-input').change(function() {
-	    const files = $(this)[0].files;
-	    if (files && files.length > 0) {
-	        // Display selected images and increment count for each image
-	        for (let i = 0; i < files.length; i++) {
-	            const file = files[i];
-	            displayImage(file);
-	            // Increment imageCount for each image
-	            incrementImageCount();
-	        }
-	
-	        // Hide '+' button if imageCount exceeds 8
-	        if (imageCount >= 8) {
-	            $('.sell-add-image').hide();
-	        }
-	    }
-	});
+        const imageCount = $('.sell-image-wrapper').children().length - 1 // -1 for the + div
+        const maxImages = 8
 
-    // Function to display selected image
-    function displayImage(file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const $newImg = $('<div class="sell-img"></div>');
-            $newImg.css('background-image', `url('${e.target.result}')`);
+        if (imageCount < maxImages) {
+
+            const $newImg = $(`<div class="sell-img"></div>`)
+            $newImg.css('background-image', `url('https://picsum.photos/500/550?${imageCount}')`)
+
             $('.sell-image-wrapper > :last-child').before($newImg);
-        };
-        reader.readAsDataURL(file);
-    }
+
+            if (imageCount === maxImages) {
+
+                $('.sell-add-image').hide(); // Don't allow more than 8 images
+
+            }
+
+        }
+
+    })
 
     // If "Please fill in all fields/select listing type" is shown reset it to the publish button when an input is clicked
     $('input').click(function() {

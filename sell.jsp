@@ -39,18 +39,25 @@ try {
         imageCount = Integer.parseInt(request.getParameter("imageCount"));
     }
 
-    // Get seller ID from session and parse it as an integer
-    //String userIdString = (String) session.getAttribute("sellerId");
-    String userIdString = "1";
-    int sellerId = 0;
+ // Get the session object
 
-    try {
-        sellerId = Integer.parseInt(userIdString);
-    } catch (NumberFormatException e) {
-        out.println("Error parsing seller ID: " + e.getMessage());
-        e.printStackTrace(new PrintWriter(out));
-        return; // Return from the JSP page if seller ID is not valid
+    // Print out the session object
+    out.println("Session Object: " + session);
+
+    // Print out the session ID
+    out.println("Session ID: " + session.getId());
+
+    // Print out all attributes in the session
+    Enumeration<String> sessionAttributes = session.getAttributeNames();
+    while (sessionAttributes.hasMoreElements()) {
+        String attributeName = sessionAttributes.nextElement();
+        Object attributeValue = session.getAttribute(attributeName);
+        out.println("Attribute Name: " + attributeName + ", Value: " + attributeValue);
     }
+
+    // sellerId is the same as userId since the currently logged in user is creating the auction
+    // and the auction doesn't exist in the database yet
+    int sellerId = (int) session.getAttribute("userId");
 
     // Verify that the seller ID exists in the end_user table
     String verifySellerQuery = "SELECT COUNT(*) FROM end_user WHERE user_id = ?";

@@ -38,6 +38,7 @@
         int rowsAffected = insertStmt.executeUpdate();
         if (rowsAffected > 0) {
             // Set session attributes and return success
+            session.setAttribute("user_id", userId);
             session.setAttribute("username", username);
             session.setAttribute("email", email);
             session.setAttribute("loggedIn", true); // Set loggedIn attribute to true
