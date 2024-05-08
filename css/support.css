@@ -1,0 +1,81 @@
+.example-thread, .example-thread-message {
+    display: none;
+}
+
+.message-wrapper {
+    font-size: 2.5rem;
+    padding: 5rem;
+}
+
+.thread-wrapper {
+    background-color: white;
+    border-radius: 2rem;
+    padding: 4rem;
+}
+
+.thread-question-title {
+    font-weight: 500;
+}
+
+.thread-open {
+    color: rgb(88, 59, 220);
+    cursor: pointer;
+}
+
+.absolute-thread-messages-modal  {
+    position: fixed;
+    inset: 0;
+    background-color: white;
+    margin: 8rem;
+    border-radius: 2rem;
+    z-index: 2;
+    padding: 5rem;
+}
+
+.thread-message-wrap {
+    margin-top: 2rem;
+    border-bottom: 2px solid gray;
+    padding-bottom: 2rem;
+}
+
+.message-list .thread-message-wrap:last-child {
+    border-bottom: none;
+}
+
+.role, .datetime {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.datetime {
+    margin-left: 1rem;
+}
+
+.overlay {
+    background-color: black;
+    opacity: 0.8;
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.close-wrapper {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    width: 100%;
+    text-align: center;
+    height: min-content;
+    display: flex;
+    justify-content: center;
+}
+
+.close {
+    font-size: 2rem;
+    background-color: rgb(55, 193, 55);
+    padding: 2rem;
+    border-radius: 1rem;
+    width: min-content;
+    cursor:pointer
+}
