@@ -80,10 +80,8 @@ function populateListings() {
 	
 	        $thisListing.find('.listing-price').text('$' + listing.winningPrice);
 	
-	        $thisListing.find('.listing-bids').text(listing.bids.length + ' bids');
-	
-	        $thisListing.find('.listing-stats').text(listing.views + ' views | ' + listing.favorites + ' favorites');*/
-	
+	        $thisListing.find('.listing-bids').text(listing.bids.length + ' bids');*/
+		
 	        $thisListing.find('.listing-img').css('background-image', `url('https://picsum.photos/500/550?${i}')`);
 	
 	        $('.listings-list > :last-child').before($thisListing);
@@ -152,9 +150,7 @@ const sampleAuctions = [
                 'bidTime': undefined,
                 'bidNum': 1
             }
-        ],
-        'views': 15,
-        'favorites': 3
+        ]
     },
     {
         'title': 'Vintage Polaroid Camera',
@@ -213,9 +209,7 @@ const sampleAuctions = [
                 'bidPrice': 50.00,
                 'bidNum': 1
             }
-        ],
-        'views': 92,
-        'favorites': 18
+        ]
     },
     {
         'title': 'Handmade Ceramic Vase',
@@ -259,8 +253,6 @@ const sampleAuctions = [
                 'bidPrice': 10.00,
                 'bidNum': 1
             }
-        ],
-        'views': 47,
-        'favorites': 9
+        ]
     }
 ];
