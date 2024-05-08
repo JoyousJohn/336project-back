@@ -9,5 +9,37 @@ $(document).ready(function() {
     $('.search-input').on('blur', function() {
         $('.search-form').css('border-color', 'gray')
     })
+    
+    getAuctions(function(auctions) {
+		
+		let l = 0;
+
+		console.log(auctions)
+
+	    for (let auction in auctions) {
+			
+			auction = auctions[auction]
+	
+			console.log('auction title: ', auction.title)
+	
+	        $thisAuction = $('.auction-template').clone().removeClass('auction-template')
+	
+	        $thisAuction.find('.auction-img').css('background-image', `url('https://picsum.photos/500/550?${l}')`)
+	
+	        $thisAuction.find('.auction-title').text(auction.title)
+	        //$thisAuction.find('.auction-price').text('$' + auction.winningBidPrice)
+	
+	        //$thisAuction.find('.auction-bidders').text(auction.bids.length + ' bids')
+	
+	        $('.auctions').append($thisAuction.removeClass('none'))
+	
+			console.log('this auction: ', $thisAuction.get())
+	
+	        l++;
+	
+	    }
+		
+		
+	})
 
 })
