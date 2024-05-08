@@ -169,7 +169,7 @@ CREATE TABLE `end_user` (
   `user_id` int NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  `name` varchar(5) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
   `role` varchar(15) DEFAULT NULL,
   `prev_auctions` varchar(50) DEFAULT NULL,
