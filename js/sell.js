@@ -167,6 +167,7 @@ function publishAuction(newListing) {
             success: function(response) {
                 console.log('Auction published successfully!!');
                 console.log('Response:', response);
+                window.location.href = 'profile.html'
                 resolve(response); // Resolve the Promise with the response
             },
             error: function(xhr, status, error) {
