@@ -57,7 +57,7 @@ try {
 
     // sellerId is the same as userId since the currently logged in user is creating the auction
     // and the auction doesn't exist in the database yet
-    int sellerId = (int) session.getAttribute("user_id");
+    int sellerId = (int) session.getAttribute("userId");
 
     // Verify that the seller ID exists in the end_user table
     String verifySellerQuery = "SELECT COUNT(*) FROM end_user WHERE user_id = ?";
