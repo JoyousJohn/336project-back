@@ -28,14 +28,11 @@ $(document).ready(function() {
 
 function populateInfo() {
 	
-	
-	getSessionAtr(function(sa) {
-		
-		console.log(sa)
+	getAttributes().then(function(sa) {
 		
 		$('.profile-username').text(sa.username);
 		$('.profile-email').text(sa.username);
-		
+
 	})
 	
 }
