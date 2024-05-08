@@ -44,14 +44,12 @@ function getAuctions(callback) {
     });
 }
 
-
-
 function isUserLoggedIn() {
-	return getUsername() !== undefined
+    return getUsername() !== null; // Changed from undefined to null
 }
 
-function getSessionAtr(callback) {
-    $.get('get_session_atr.jsp').then(function(data) {
+function getSessionAtr() {
+    return $.get('get_session_atr.jsp').then(function(data) {
         var attributes = {};
         var lines = data.trim().split('\n');
         lines.forEach(function(line) {
@@ -60,20 +58,20 @@ function getSessionAtr(callback) {
             var value = parts[1].trim();
             attributes[key] = value;
         });
-        // Invoke the callback function with the session attributes data
-        callback(attributes);
+        return attributes; // Return attributes directly
     }).fail(function(xhr, status, error) {
         console.error('Error:', error); // Log any errors
-        callback(null); // Or handle the error as needed
+        throw new Error(error); // Throw an error to be caught in the calling code
     });
 }
-
-getSessionAtr().then(function(attributes) {
-    return attributes
-});
 
 function getAttributes() {
-    return getSessionAtr().then(function(attributes) {
-        return attributes;
-    });
+    return getSessionAtr(); // No need for an additional promise here
 }
+
+// Usage
+getAttributes().then(function(attributes) {
+    console.log(attributes); // Handle the attributes here
+}).catch(function(error) {
+    console.error('Error:', error); // Log any errors
+});
