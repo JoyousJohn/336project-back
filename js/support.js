@@ -48,7 +48,35 @@ $(document).ready(function() {
         $('.no-messages').removeClass('none')
     }
 
+    $('.ask').click(function() {
+
+        $('.new-thread').removeClass('none').show();
+        $('.overlay').show();
+
+    })
+
+    $('.nevermind').click(function() {
+
+
+        $('.overlay').hide();
+        $('.new-thread').hide();
+
+    })
+
+    $('.ask-btn').click(function() {
+
+        const question = $('.q-input').val()
+        postQuestion(question)
+
+    })
+
 })
+
+function postQuestion(question) {
+
+    // Make a post request. Question is the question string!!
+
+}
 
 
 function getThreads() {
