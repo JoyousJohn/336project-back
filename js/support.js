@@ -67,6 +67,8 @@ $(document).ready(function() {
 
         const question = $('.q-input').val()
         postQuestion(question)
+        $('.ask-btn').text('Posting question...')
+        $('.nevermind').hide();
 
     })
 
@@ -75,6 +77,8 @@ $(document).ready(function() {
 function postQuestion(question) {
 
     // Make a post request. Question is the question string!!
+
+    // Reload the page on post request success to display new question!
 
 }
 
