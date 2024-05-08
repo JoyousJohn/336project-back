@@ -1,0 +1,87 @@
+<html>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/wind.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/support.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    
+    <script src="js/utils.js"></script>
+    <script src="js/support.js"></script>
+
+    <link href="https://fonts.cdnfonts.com/css/richela-kids" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/it-encore-sans" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9fec56898e.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="content">
+
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+            <div class="sidebar-logo">ShopBay</div>
+            <a href="index.html"><div class="sidebar-item sidebar-explore"><i class="fa-solid fa-house"></i>Explore</div></a>
+            <div class="sidebar-item sidebar-profile"><i class="fa-solid fa-user"></i><span class="txt">Profile</span></div>
+            <a href="sell.html"><div class="sidebar-item sidebar-sell"><i class="fa-solid fa-shop"></i>Sell</div></a>
+            <a href="admin.html"><div class="sidebar-item sidebar-admin"><i class="fa-solid fa-user-tie"></i>Admin</div></a>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-item sidebar-selected"><i class=" fa-solid fa-circle-question"></i>Support</div>
+            <div class="sidebar-item"><i class="fa-solid fa-gear"></i>Settings</div>
+        </div>
+
+    </div>
+
+    <div class="main flex flex-col w-full">
+
+        <div class="message-wrapper mont">
+
+            <div class="thread-wrapper example-thread">
+
+                <div class="thread-question-title"></div>
+                <div class="thread-latest-reply-time"></div>
+                <div class="thread-chat-count"></div>
+                <div class="thread-open">Open thread</div>
+
+                <div class="absolute-thread-messages-modal none">
+
+                    <div class="message-list">
+
+                        <div class="example-thread-message thread-message-wrap">
+
+                            <div class="username"></div>
+                            <div class="flex">
+                                <div class="role"></div>
+                                <div class="datetime"></div>
+                            </div>       
+                            <div class="message"></div>
+    
+                        </div>
+
+                    </div>
+
+                    <div class="close-wrapper">
+                        <div class="close">CLOSE</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="no-messages none">You have no messages!</div>
+
+        </div>
+
+    </div>
+
+    <div class="overlay"></div>
+
+</div>
+
+</body>
+
+</html>
