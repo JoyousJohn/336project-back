@@ -224,7 +224,7 @@ $(document).ready(function() {
 	    });
 	});
 	
-	$.get('get-username.jsp', function(data) {
+	$.get('get_username.jsp', function(data) {
 		sessionUsername = data
 	});
 
