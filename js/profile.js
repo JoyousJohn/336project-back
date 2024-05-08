@@ -31,7 +31,7 @@ function populateInfo() {
 	getAttributes().then(function(sa) {
 		
 		$('.profile-username').text(sa.username);
-		$('.profile-email').text(sa.username);
+		$('.profile-email').text(sa.email);
 
 	})
 	
@@ -52,9 +52,22 @@ function populateListings() {
 
 			listing = userListings[listing]
 
+			console.log(listing)
+
 	        let $thisListing = $('.template-item').clone().removeClass('template-item');
 	
 	        $thisListing.find('.listing-title').text(listing.title);
+	
+			let closes = listing.when_closes
+			x = formatDatetime(closes)
+			
+			days = x[0]
+			hours = x[1]
+			minutes = x[2]
+			
+			console.log(hours)
+	
+		    $thisListing.find('.listing-time-remaining').text(`${days}d ${hours}h ${minutes}m remaining`);
 	
 	        /*let listingType;
 	        if (listing.type === 'auction' && listing.active === true) {
@@ -64,7 +77,6 @@ function populateListings() {
 	        }
 	        $thisListing.find('.listing-type').text(listingType);
 	
-	        $thisListing.find('.listing-time-remaining').text(listing.remaining + ' remaining');
 	
 	        $thisListing.find('.listing-price').text('$' + listing.winningPrice);
 	
@@ -82,6 +94,29 @@ function populateListings() {
     });
 }
 
+function formatDatetime(timeString) {
+  const parts = timeString.split(" ");
+  const dateString = parts[0].split("-");
+  const timeStringParts = parts[1].split(":"); // Renamed the variable
+
+  const year = parseInt(dateString[0], 10);
+  const month = parseInt(dateString[1], 10) - 1; // Months are zero-based
+  const day = parseInt(dateString[2], 10);
+  const hour = parseInt(timeStringParts[0], 10);
+  const minute = parseInt(timeStringParts[1], 10);
+  const second = parseInt(timeStringParts[2], 10);
+
+  const dateObject = new Date(year, month, day, hour, minute, second);
+  const now = new Date();
+  const diffMs = Math.abs(now - dateObject);
+
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+  return [days, hours, minutes];
+}
 
 // Implement a get request here that returns a user's auctions from SQL db
 function getListings() {
