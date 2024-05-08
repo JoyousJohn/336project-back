@@ -19,6 +19,8 @@ $(document).ready(function() {
 	    for (let auction in auctions) {
 			
 			auction = auctions[auction]
+			
+			console.log(auction)
 	
 			console.log('auction title: ', auction.title)
 	
@@ -28,6 +30,8 @@ $(document).ready(function() {
 	
 	        $thisAuction.find('.auction-title').text(auction.title)
 	        //$thisAuction.find('.auction-price').text('$' + auction.winningBidPrice)
+	
+			$thisAuction.attr('href', 'item.html?uuid=' + auction.auction_id)
 	
 	        //$thisAuction.find('.auction-bidders').text(auction.bids.length + ' bids')
 	
