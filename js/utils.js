@@ -82,63 +82,43 @@ function updateSidebar() {
     });
 }
 
+
+
+
 // Function to render fetched listings on the page
 function renderListings(listings) {
-	
-	console.log("Fetched Listings:", listings); 
-	
-	if (typeof listings !== 'object' || !Array.isArray(listings)) {
-        console.error('Error: listings is not an array or object');
-        return;
-    }
-	
-    // Check if listings is an array or object
-    if (Array.isArray(listings) || typeof listings === 'object') {
-        // Get the auctions container
-        var auctionsContainer = $('.auctions');
-        auctionsContainer.empty(); // Clear existing listings
-        
-        // If listings is an array, iterate over it
-        if (Array.isArray(listings)) {
-            listings.forEach(function(listing) {
-                // Generate HTML for each listing
-                var listingHTML = `
-                    <div class="auction">
-                        <h3>${listing.title}</h3>
-                        <p>Description: ${listing.description}</p>
-                        <p>Starting Price: $${listing.starting_price}</p>
-                    </div>
-                `;
-                // Append the listing HTML to the auctions container
-                auctionsContainer.append(listingHTML);
-            });
-        } else {
-            // If listings is an object, handle it as a single listing
-            var listingHTML = `
-                <div class="auction">
-                    <h3>${listings.title}</h3>
-                    <p>Description: ${listings.description}</p>
-                    <p>Starting Price: $${listings.starting_price}</p>
-                </div>
-            `;
-            // Append the listing HTML to the auctions container
-            auctionsContainer.append(listingHTML);
-        }
-    } else {
-        // Handle case where listings is not an array or object
-        console.error('Error: listings is not an array or object');
-    }
+    console.log("Fetched Listings:", listings);
+
+    // Get the auctions container element
+    var auctionsContainer = $('.auctions');
+    auctionsContainer.empty(); // Clear existing listings
+
+    // Iterate over each listing
+    $.each(listings, function(index, listing) {
+        // Generate HTML for the auction listing
+        var listingHTML = `
+            <div class="auction-item">
+                <h3 class="auction-title">${listing.title}</h3>
+                <p class="auction-description">${listing.description}</p>
+                <p class="auction-starting-price">Starting Price: $${listing.reserve}</p>
+            </div>
+        `;
+
+        // Append the listing HTML to the container
+        auctionsContainer.append(listingHTML);
+    });
 }
+
 
 
 // Function to fetch listings from the server
 function fetchListings() {
     // Make an AJAX request to fetch listings
     $.ajax({
-        url: 'fetchListings.jsp',
+        url: 'fetchListings.jsp', // Update with the correct URL to fetch listings
         method: 'GET',
+        dataType: 'json', // Specify JSON as the expected data type
         success: function(response) {
-            // Assuming response contains listings data
             // Log the response to verify its structure and data
             console.log('Fetched Listings:', response);
 
@@ -151,7 +131,6 @@ function fetchListings() {
     });
 }
 
-     
 
 function hasEmptyValues(obj) {
 	const values = Object.values(obj);
@@ -199,6 +178,9 @@ let sessionUsername
 $(document).ready(function() {
     
     updateSidebar(); // Call the function to update sidebar links
+    fetchListings(); // Call the function to fetch listings
+
+
 
     // Add click event listener to the auction titles
     $('.auction-title').on('click', function() {

@@ -121,7 +121,7 @@ function fetchListings() {
         url: 'fetchListings.jsp', // Replace with your server-side endpoint
         success: function(response) {
             // Handle successful response
-            renderListings(response); // Call the renderListings function with the response data
+            //renderListings(response); // Call the renderListings function with the response data
         },
         error: function(xhr, status, error) {
             console.error('Error fetching listings:', error);
@@ -167,7 +167,6 @@ function publishAuction(newListing) {
             success: function(response) {
                 console.log('Auction published successfully!!');
                 console.log('Response:', response);
-                window.location.href = 'profile.html';
                 resolve(response); // Resolve the Promise with the response
             },
             error: function(xhr, status, error) {
