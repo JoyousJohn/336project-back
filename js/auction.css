@@ -1,0 +1,62 @@
+.auctions {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 3rem;
+    gap: 2rem;
+}
+
+/* Style auction images */
+.auction-img {
+    aspect-ratio: 1;
+    background-size: cover;
+    border-radius: 1rem;
+    cursor: pointer; /* Change cursor to pointer to indicate clickable */
+}
+
+/* Add underline on hover for auction images */
+.auction-img:hover {
+    text-decoration: underline; /* Add underline on hover for images */
+    text-decoration-color: black;
+    cursor: pointer;
+}
+
+/* Style auction titles */
+.auction-title {
+    font-family: Montserrat;
+    font-size: 2.5rem;
+    color: black;
+    cursor: pointer; /* Change cursor to pointer to indicate clickable */
+}
+
+/* Add underline on hover for auction titles */
+.auction-title:hover {
+    text-decoration: underline; /* Add underline on hover for titles */
+    text-decoration-color: black;
+    cursor: pointer;
+}
+
+/* Add underline on hover for text links within auction titles */
+.auction-title a:hover {
+    text-decoration: none; /* Remove underline on hover for text links */
+}
+
+
+.auction-title {
+    font-family: Montserrat;
+    font-size: 2.5rem;
+    color: black;
+}
+
+.auction-sub-info {
+    font-family: Montserrat;
+    font-size: 2rem;
+    color: black;
+}
+
+.auction-price {
+    font-weight: 600;
+}
+
+.auction-bidders {
+    color: rgb(66, 66, 66);
+}

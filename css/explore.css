@@ -1,0 +1,29 @@
+.search-form {
+    border: 2px solid gray;
+    background-color: white;
+    color: gray;
+    transition: 300ms;
+    margin: 0; /* for some reason 10px bottom margin is being added */
+}
+
+.search-form > i {
+    font-size: 2rem;
+    margin-left: 1.5rem;
+}
+
+.search-input {
+    border: none;
+    font-size: 2rem;
+    background-color: transparent;
+    padding: 1rem;
+    flex-grow: 1;
+    font-family: Montserrat;
+}
+
+.search-input::placeholder {
+    font-weight: 400;
+}
+
+.search-input:focus {
+    outline: none;
+}

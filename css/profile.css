@@ -1,0 +1,150 @@
+.main {
+    padding: 4rem;
+}
+
+.profile-basics {
+    font-size: 2.5rem;
+    font-family: Montserrat;
+}
+
+.your-profile {
+    font-weight: bold;
+    font-size: 2.5rem;
+    color: rgb(93, 46, 164);
+    border-bottom: 1px solid gray;
+    margin-bottom: 1rem;
+    font-family: Montserrat;
+    width: max-content;
+}
+
+.profile-sub {
+    color: black;
+    font-weight: 600;
+    font-family: Montserrat;
+    font-size: 2rem;
+}
+
+.profile-advanced {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 3rem;
+    padding-bottom: 3rem;
+}
+
+.profile-alerts, .profile-auctions {
+    /* width: max-content; */
+}
+
+.logout-btn {
+    font-size: 3rem;
+    font-weight: 500;
+    font-family: Montserrat;
+    background-color: rgb(84, 8, 84);
+    color: white;
+    padding: 0.5rem 0;
+    text-align: center;
+    transition: 200ms;
+    cursor: pointer;
+}
+
+.template-item {
+    display: none !important;
+}
+
+.listings-list {
+    margin-top: 2rem;
+    display: grid;
+    row-gap: 2.5rem;
+}
+
+.listing-item {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    column-gap: 2rem;
+}
+
+.listing-img {
+    background-image: url('https://picsum.photos/500/550');
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    aspect-ratio: 1;
+    border-radius: 0.5rem;
+}
+
+.listing-info-wrap {
+    font-family: Montserrat;
+    font-size: 2.5rem;
+}
+
+.listing-title {
+    text-decoration: underline;
+}
+
+.listing-type {
+    font-weight: 500;
+    color: rgb(0, 183, 43);
+    font-size: 2rem;
+}
+
+.listing-time-remaining {
+    font-size: 2rem;
+}
+
+.listing-price {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: rgb(78, 78, 78);
+}
+
+.listing-bids {
+    font-size: 2rem;
+}
+
+.listing-stats {
+    font-size: 1.8rem;
+    /* font-weight: bold; */
+    color: rgb(91, 91, 91);
+}
+
+.new-listing {
+    background-color: rgb(193, 193, 193);
+    border-radius: 0.5rem;
+    transition: 200ms;
+    cursor: pointer;
+    color: rgb(224, 224, 224);
+    column-gap: 0;
+}
+
+.new-listing:hover {
+    background-color: rgb(174, 174, 174);
+}
+
+.new-listing:hover .new-listing-plus {
+    color: rgb(197, 197, 197);
+}
+
+.new-listing-plus {
+    background-color: rgb(114, 114, 114);
+    border-radius: 0.5rem;
+    color: darkgray;
+    aspect-ratio: 1;
+    font-size: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    transition: 150ms;
+} 
+
+.new-listing-text {
+    font-family: Montserrat;
+    font-size: 2.5rem;
+    color: rgb(128, 128, 128);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    padding-left: 2rem;
+}
