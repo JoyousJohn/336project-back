@@ -11,9 +11,7 @@ $(document).ready(function() {
     data: { auctionId: uuid },
     dataType: "json",
     success: function(data) {
-	      
-			populateListingInfo(data)
-	      	      
+			populateListingInfo(data)	      	      
 	    },
 	    error: function(xhr, status, error) {
 	      	console.error("Error:", error);
@@ -40,7 +38,7 @@ $(document).ready(function() {
 
     $('.bid-breakdown').append($startPriceElm)*/
 
-    addAVew()
+    //addAVew()
 
     $('.bid-price-input').val('')
 
@@ -74,8 +72,18 @@ function populateListingInfo(data) {
     /*$('.winning-price').text('US $' + listingData['winningPrice'])*/
 
     //if (listingData['reserve'] > listingData['winningPrice']) {
-        $('.reserve-not-met').show();
+    $('.reserve-not-met').show();
     //}
+
+	console.log(data)
+
+	let x = formatDatetime(data.when_closes)
+	
+	days = x[0]
+	hours = x[1]
+	minutes = x[2]
+	
+	$('.listing-ending-in').text(`${days}d ${hours}h ${minutes}m remaining`);
 
     //$('.bids-count').text(listingData['bids'].length + ' bids')
     //$('.ends-in').text('Ends in ' + listingData['endsIn'])
