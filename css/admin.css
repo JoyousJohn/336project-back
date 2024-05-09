@@ -243,3 +243,23 @@ select, option {
     margin-top: 1rem;
     margin-left: 1rem;
 }
+
+.m-auc-item-template {
+	display: none;
+}
+
+.m-auc-item {
+	text-decoration: none;
+}
+
+.title {
+	color: black;
+	border-top: 1px solid black;
+	padding-top: 0.5rem;
+	text-decoration: underline;
+}
+
+.time-remaining {
+	color: #444444;
+	margin-bottom: 1rem;
+}
