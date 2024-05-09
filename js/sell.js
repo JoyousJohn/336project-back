@@ -31,6 +31,7 @@ $(document).ready(function() {
     $('.sell-add-image').click(function() {
 
         const imageCount = $('.sell-image-wrapper').children().length - 1 // -1 for the + div
+        alert(imageCount)
         const maxImages = 8
 
         if (imageCount < maxImages) {
@@ -78,8 +79,10 @@ function publish() {
             const description = $('#sell-description').val();
             const endDate = $('.sell-end-date').val(); // Move this line here
 
+			console.log(title, category, description, endDate)
+
             // Check if any values were empty and show error if so
-            if (hasEmptyValues({ title, category, description, endDate })) { // Pass form data to hasEmptyValues
+            if (title === '' || category === '' || description === '' || endDate === '') { // Pass form data to hasEmptyValues
                 $('.publish').text('Please fill in all fields!').addClass('publish-error');
                 return;
             }

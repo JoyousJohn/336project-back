@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.io.*, java.util.*, java.sql.*" %>
 <%@ page import="com.cs336.pkg.ApplicationDB" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.HashMap" %>
 
 <%
 ApplicationDB db = new ApplicationDB();
@@ -17,14 +20,19 @@ try {
     String endDate = request.getParameter("sell-end-date");
     String condition = request.getParameter("sell-condition");
 
+    Date now = new Date();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    String formattedDateTime = dateFormat.format(now);
+   	String created = formattedDateTime;
+
     // Parse numeric values with default values if parameters are null or empty
     double bidIncrement = 0.0; // Optional bid increment, default to 0 if not provided
     double reserve = 0.0;
     int imageCount = 0;
     double price = 0.0; // Initialize price with default value
     
-    if (request.getParameter("sell-price") != null && !request.getParameter("sell-price").isEmpty()) {
-        price = Double.parseDouble(request.getParameter("sell-price"));
+    if (request.getParameter("sell-auc-price") != null && !request.getParameter("sell-auc-price").isEmpty()) {
+        price = Double.parseDouble(request.getParameter("sell-auc-price"));
     }
     
     if (request.getParameter("sell-increment") != null && !request.getParameter("sell-increment").isEmpty()) {
@@ -75,7 +83,7 @@ try {
     int auctionId = (int) (Math.random() * (100000 - 10 + 1)) + 10;
 
     // Insert new listing into the posted_auction table
-    String query = "INSERT INTO posted_auction (auction_id, seller_id, when_closes, description, bid_increment, reserve, imageCount, title) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    String query = "INSERT INTO posted_auction (auction_id, seller_id, when_closes, description, bid_increment, reserve, imageCount, title, created, bid_info) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     stmt = con.prepareStatement(query);
     stmt.setInt(1, auctionId);
     stmt.setInt(2, sellerId);
@@ -85,7 +93,26 @@ try {
     stmt.setDouble(6, reserve); // Convert reserve to double
     stmt.setInt(7, imageCount); // Convert imageCount to integer
     stmt.setString(8, title); // Convert imageCount to integer
+    stmt.setString(9, created); // Convert imageCount to integer
+    
+    HashMap<String, String> bidObj = new HashMap<>();
+    
+    bidObj.put("seller_id", String.valueOf(sellerId));
+    bidObj.put("time", created);
+    bidObj.put("bid", String.valueOf(price));
+    StringBuilder builder = new StringBuilder();
+    builder.append("{");
+    for (Map.Entry<String, String> entry : bidObj.entrySet()) {
+    	builder.append("'").append(entry.getKey()).append("':'").append(entry.getValue()).append("', ");
+    }
+    if (builder.length() > 1) {
+        builder.setLength(builder.length() - 2); // Remove the trailing ", "
+    }
+    builder.append("}");
+    String bidObjStr = "[" + builder.toString() + "]";
 
+    stmt.setString(10, bidObjStr);
+    
     // Execute the query
     int rowsAffected = stmt.executeUpdate();
 

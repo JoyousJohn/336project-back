@@ -156,7 +156,7 @@
                 }
             } else {
                 // Query to fetch all users
-                String query = "SELECT username, name, email, role FROM end_user";
+                String query = "SELECT username, name, email, role, user_id FROM end_user";
 
                 PreparedStatement ps = con.prepareStatement(query);
                 ResultSet rs = ps.executeQuery();
@@ -170,12 +170,14 @@
                     String name = rs.getString("name");
                     String email = rs.getString("email");
                     String role = rs.getString("role");
+                    String user_id = rs.getString("user_id");
 
                     // Append user details to the response
                     responseBuilder.append(username).append("|")
                                    .append(name).append("|")
                                    .append(email).append("|")
-                                   .append(role).append("\n");
+                                   .append(role).append("|")
+                                   .append(user_id).append("\n");
                 }
 
                 // Close resources

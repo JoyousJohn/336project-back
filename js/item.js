@@ -14,7 +14,7 @@ $(document).ready(function() {
 			populateListingInfo(data)	      	      
 	    },
 	    error: function(xhr, status, error) {
-	      	console.error("Error:", error);
+	      	//console.error("Error:", error);
 	    }
   	});
 
@@ -65,6 +65,8 @@ $(document).ready(function() {
 })
 
 function populateListingInfo(data) {
+				
+	console.log(data)
 		
 	$('.listing-title').text(data.title)
     $('.listing-description').text(data.description)
@@ -74,8 +76,6 @@ function populateListingInfo(data) {
     //if (listingData['reserve'] > listingData['winningPrice']) {
     $('.reserve-not-met').show();
     //}
-
-	console.log(data)
 
 	let x = formatDatetime(data.when_closes)
 	
@@ -101,7 +101,41 @@ function populateListingInfo(data) {
        $('.img-gallery').append($galleryImg)
 
     }
-	
+      
+    let bidInfo = JSON.parse(data.bid_info.replaceAll(`'`, `"`))
+ 
+ 	bidInfo.forEach(bid => {
+		
+		console.log(bid)
+ 
+ 		const id = bid.seller_id
+ 		
+ 		$.ajax({
+			  type: "POST",
+			  url: "get_username_from_id.jsp",
+			  data: { id: id }, // Replace 123 with the desired user ID
+			  success: function(response) {
+			    
+			    const $bidElm = $(`
+			    	<a href="/user.html/${response}">${response}</a>
+			    	<div>$${bid.bid}</div>
+			    	<div>${bid.time}</div>
+			    `)
+			    
+			    $('.bid-breakdown').append($bidElm)
+			    
+			  },
+			  error: function(xhr, status, error) {
+			    console.error("Error:", error);
+			    // Handle the error
+			  }
+		});
+ 
+	 	
+	    
+	});
+
+  
 }
 
 // Get auction info from the auction table in SQL via JSP via uuid primary key

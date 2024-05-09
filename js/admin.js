@@ -259,7 +259,7 @@ function createNewUser() {
     var email = $('.new-user-email').val();
     var password = $('.new-user-password').val();
     var role = $('.new-user-role').val();
-
+    
     // Check if any field is empty
     if (!username || !name || !email || !password || !role) {
         // If any field is empty, show an error message and exit
