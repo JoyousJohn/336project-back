@@ -77,12 +77,14 @@ function populateListings() {
 	        } else if (listing.type === 'bin') {
 	            listingType = 'Buy it now';
 	        }
-	        $thisListing.find('.listing-type').text(listingType);
+	        $thisListing.find('.listing-type').text(listingType);*/
 	
+	    	let bidInfo = JSON.parse(listing.bid_info.replaceAll(`'`, `"`))
 	
-	        $thisListing.find('.listing-price').text('$' + listing.winningPrice);
+	        $thisListing.find('.listing-price').text('$' + bidInfo[bidInfo.length-1]['bid']);
+	        $thisListing.find('.listing-bids').text(bidInfo.length + ' bids');
 	
-	        $thisListing.find('.listing-bids').text(listing.bids.length + ' bids');*/
+	        /*$thisListing.find('.listing-bids').text(listing.bids.length + ' bids');*/
 		
 	        $thisListing.find('.listing-img').css('background-image', `url('https://picsum.photos/500/550?${i}')`);
 	

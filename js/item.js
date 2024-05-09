@@ -18,27 +18,6 @@ $(document).ready(function() {
 	    }
   	});
 
-    /*listingData['bids'].forEach(bid => {
-
-        const $bidElm = $(`
-        <a href="/user.html/${bid.bidder}">${bid.bidder}</a>
-        <div>$${bid.maxBid}</div>
-        <div>${bid.bidTimeString}</div>
-        `)
-
-        $('.bid-breakdown').append($bidElm)
-
-    })
-
-    const $startPriceElm = $(`
-        <div>Start Price</div>
-        <div>$${listingData.startPrice}</div>
-        <div>${listingData.startTime}</div>
-    `)
-
-    $('.bid-breakdown').append($startPriceElm)*/
-
-    //addAVew()
 
     $('.bid-price-input').val('')
 
@@ -71,12 +50,6 @@ function populateListingInfo(data) {
 	$('.listing-title').text(data.title)
     $('.listing-description').text(data.description)
 
-    /*$('.winning-price').text('US $' + listingData['winningPrice'])*/
-
-    //if (listingData['reserve'] > listingData['winningPrice']) {
-    $('.reserve-not-met').show();
-    //}
-
 	let x = formatDatetime(data.when_closes)
 	
 	days = x[0]
@@ -104,6 +77,14 @@ function populateListingInfo(data) {
       
     let bidInfo = JSON.parse(data.bid_info.replaceAll(`'`, `"`))
  
+ 	$('.winning-price').text('US $' + bidInfo[bidInfo.length-1].bid)
+ 
+ 	if (data.reserve > bidInfo[bidInfo.length-1].bid) {
+    	$('.reserve-not-met').show();
+    }
+    
+    let u = 0;
+ 
  	bidInfo.forEach(bid => {
 		
 		console.log(bid)
@@ -123,13 +104,23 @@ function populateListingInfo(data) {
 			    `)
 			    
 			    $('.bid-breakdown').append($bidElm)
+
+				console.log('u: ', u)
+
+				if (u === 0) {
+					$('.listing-seller').text('df').attr('href', 'profile.html?uuid=' + bid.seller_id)
+				}
 			    
 			  },
 			  error: function(xhr, status, error) {
 			    console.error("Error:", error);
 			    // Handle the error
+			  },
+			  done: function() {
+			   	u++;
 			  }
 		});
+		
  
 	 	
 	    
