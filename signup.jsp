@@ -2,7 +2,6 @@
 <%@ page import="com.cs336.pkg.ApplicationDB" %>
 
 <%
-try{
     ApplicationDB db = new ApplicationDB();
     Connection con = db.getConnection();
 
@@ -12,7 +11,7 @@ try{
     String name = request.getParameter("name");
 
     // Generate a random user ID within the range of 10 to 1000
-    // int userId = (int) (Math.random() * (1000 - 10 + 1)) + 10;
+    int userId = (int) (Math.random() * (1000 - 10 + 1)) + 10;
 
     // Check if the username already exists
     PreparedStatement usernameCheckStmt = con.prepareStatement("SELECT * FROM end_user WHERE username = ?");
@@ -29,7 +28,7 @@ try{
         out.print("failure|Username or email already exists");
     } else {
         // Insert the user into the database
-        PreparedStatement insertStmt = con.prepareStatement("INSERT INTO end_user (user_id, username, password, name, email, role) VALUES (?, ?, ?, ?, ?)");
+        PreparedStatement insertStmt = con.prepareStatement("INSERT INTO end_user (user_id, username, email, name, password, role) VALUES (?, ?, ?, ?, ?, 'USER')");
         insertStmt.setInt(1, userId);
         insertStmt.setString(2, username);
         insertStmt.setString(3, email);
@@ -53,7 +52,4 @@ try{
     }
 
     con.close();
-} catch (SQLException exception) {
-    exception.printStackTrace();
-}
 %>
