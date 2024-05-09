@@ -108,7 +108,7 @@ function populateListingInfo(data) {
 				console.log('u: ', u)
 
 				if (u === 0) {
-					$('.listing-seller').text('df').attr('href', 'profile.html?uuid=' + bid.seller_id)
+					$('.listing-seller').text(response.trim()).attr('href', 'profile.html?uuid=' + bid.seller_id)
 				}
 			    
 			  },

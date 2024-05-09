@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Function to render a thread on the page
 $(document).ready(function() {
     // Call getThreads() to fetch thread data when the page loads
@@ -78,89 +79,122 @@ $threadItem.find('.close').click(function() {
 	    $(this).closest('.absolute-thread-messages-modal').addClass('none');
 	    $('.overlay').hide();
 	});
+=======
+$(document).ready(function() {
 
-    $('.message-wrapper').append($threadItem);
-}
+    const threads = getThreads();
+
+    threads.forEach(thread => {
+
+        $threadItem = $('.example-thread').clone().removeClass('example-thread')
+        $threadItem.find('.thread-question-title').text(thread['thread-question-title'])
+
+        const lastMessage = thread['thread-messages'][thread['thread-messages'].length-1]
+
+        $threadItem.find('.thread-latest-reply-time').text('Latest reply time: ' + lastMessage['datetime'])
+        $threadItem.find('.thread-chat-count').text(thread['thread-messages'].length + ' messages')
+
+        $threadItem.find('.thread-open').click(function() {
+
+            $threadItem.find('.absolute-thread-messages-modal').removeClass('none')
+            $('.overlay').show();
+
+        })
+
+        $threadItem.find('.close').click(function() {
+            $threadItem.find('.absolute-thread-messages-modal').addClass('none')
+            $('.overlay').hide();
+        })
+
+        thread['thread-messages'].forEach(threadMessage => {
+
+            $threadMessagElm = $('.example-thread-message').clone().removeClass('example-thread-message')
+
+            $threadMessagElm.find('.username').text(threadMessage['username'])
+            $threadMessagElm.find('.role').text(threadMessage['role'] + ' |')
+            $threadMessagElm.find('.datetime').text(threadMessage['datetime'])
+            $threadMessagElm.find('.message').text(threadMessage['message'])
+
+            $threadItem.find('.message-list').append($threadMessagElm)
+
+        })
+
+        console.log($threadItem)
+
+        $('.message-wrapper').append($threadItem)
+
+    })
+
+    // no threads
+    if (threads.length === 0) {
+        $('.no-messages').removeClass('none')
+    }
+
+    $('.ask').click(function() {
+
+        $('.new-thread').removeClass('none').show();
+        $('.overlay').show();
+
+    })
+
+    $('.nevermind').click(function() {
 
 
-// Function to post a new question
+        $('.overlay').hide();
+        $('.new-thread').hide();
+>>>>>>> 36665894b26ef2f1a844d36c33d6420aec4e7bcd
+
+    })
+
+    $('.ask-btn').click(function() {
+
+        const question = $('.q-input').val()
+        postQuestion(question)
+        $('.ask-btn').text('Posting question...')
+        $('.nevermind').hide();
+
+    })
+
+})
+
 function postQuestion(question) {
-    // Make AJAX request to post the question
-    $.ajax({
-        type: "POST",
-        url: "support.jsp",
-        data: { question: question },
-        success: function(response) {
-            console.log("Question posted successfully");
-            // Refresh the page to reflect the new question (or update threads array and UI dynamically)
-            location.reload();
-        },
-        error: function(xhr, status, error) {
-            console.error("Error posting question:", error);
-            // Reset button text and show "Nevermind" button
-            $('.ask-btn').text('Ask Question');
-            $('.nevermind').show();
-        }
-    });
+
+    // Make a post request. Question is the question string!!
+
+    // Reload the page on post request success to display new question!
+
 }
 
-// Function to fetch threads from the server
+
 function getThreads() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: 'getThreads.jsp',
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                if (data && Array.isArray(data)) {
-                    resolve(data);
-                } else {
-                    reject("Invalid response data");
-                }
-            },
-            error: function(xhr, status, error) {
-                reject(error);
-            }
-        });
-    });
+    // get request to jsp here
+    return exampleThreads // temporary
+
 }
 
 
-// Function to post a new question
-function postQuestion(question) {
-    // Make AJAX request to post the question
-    $.ajax({
-        type: "POST",
-        url: "support.jsp",
-        data: { question: question },
-        success: function(response) {
-            console.log("Question posted successfully");
-            // Refresh the page to reflect the new question (or update threads array and UI dynamically)
-            location.reload();
-        },
-        error: function(xhr, status, error) {
-            console.error("Error posting question:", error);
-            // Reset button text and show "Nevermind" button
-            $('.ask-btn').text('Ask Question');
-            $('.nevermind').show();
-        }
-    });
-}
 
-// Function to fetch threads from the server
-function getThreads() {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: 'getThreads.jsp',
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                if (data && Array.isArray(data)) {
-                    resolve(data);
-                } else {
-                    reject("Invalid response data");
-                }
+const exampleThreads = [
+    {
+        'thread-id': '5757',
+        'thread-question-title': 'How do I make a new listing?',
+        'thread-messages': [
+            
+            {
+                'username': 'tatijoli',
+                'role': 'asker',
+                'message': 'Hi! how do I make a new auction?',
+                'datetime': '5/5/2024, 4:14 PM'
+
             },
+            {
+                'username': 'admin123',
+                'role': 'representative',
+                'message': 'You make a new auction by clicking the new sell sidebar tab!!',
+                'datetime': '5/7/2024, 7:14 PM'
+
+            },
+<<<<<<< HEAD
             error: function(xhr, status, error) {
                 reject(error);
             }
@@ -196,3 +230,9 @@ function checkLoginStatus(callback) {
 checkLoginStatus(function(status) {
     console.log(status); // Handle the login status here
 });
+=======
+        ]         
+
+    }
+]
+>>>>>>> 36665894b26ef2f1a844d36c33d6420aec4e7bcd

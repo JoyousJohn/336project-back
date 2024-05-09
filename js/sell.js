@@ -167,6 +167,8 @@ function publishAuction(newListing) {
     
     const b = `${s}&imageCount=${c}`
     
+    console.log('parameter data: ', b)
+    
     return new Promise(function(resolve, reject) {
         $.ajax({
             url: 'sell.jsp',
