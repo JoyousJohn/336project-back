@@ -80,21 +80,28 @@
     cursor:pointer
 }
 
+.new-thread.none {
+    display: none;
+}
+
 .new-thread {
-    position: absolute;
-    inset: 0;
-    font-size: 2.5rem;
-    font-family: Montserrat;
-    text-align: center;  
-    display: flex;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+}
+
+.new-thread.show {
+    display: flex;
 }
 
 .new-thread > div {
-    width: min-content;
-    height: min-content;
     background-color: white;
     border-radius: 2rem;
     padding: 3rem;

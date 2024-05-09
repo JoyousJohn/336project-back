@@ -274,6 +274,27 @@ LOCK TABLES `posted_auction` WRITE;
 /*!40000 ALTER TABLE `posted_auction` DISABLE KEYS */;
 /*!40000 ALTER TABLE `posted_auction` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+DROP TABLE IF EXISTS `message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `message` (
+  `message_id` int NOT NULL,
+  `user_id` INT NOT NULL,
+  `messageText` TEXT NOT NULL,
+  `response_thread` INT,
+  PRIMARY KEY (`message_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `end_user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
