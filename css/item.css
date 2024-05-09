@@ -58,16 +58,16 @@
     text-decoration: underline;
 }
 
-.ends-in {
+.listing-ending-in {
     font-size: 2rem;
     color: rgb(100, 100, 100);
-    margin-left: 1rem;
     font-weight: 500;
+    margin-bottom: 3rem;
 }
 
 .listing-condition-wrap {
     margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem;
     font-size: 1.8rem;
     font-weight: 500;
 }
