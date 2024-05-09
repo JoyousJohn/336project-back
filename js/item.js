@@ -2,40 +2,25 @@ let uuid
 
 $(document).ready(function() {
 
-    const listingData = getExampleListingData()
-
     uuid = new URLSearchParams(window.location.search).get('uuid'); // SQL primary key for the auction data
     // const listingData = getItemData(uuid) // uncomment this once getItemData() is implemented
 
-    $('.listing-title').text(listingData['title'])
-    $('.listing-description').text(listingData['description'])
+	$.ajax({
+    type: "POST",
+    url: "get_auction_info.jsp", // Replace with the actual path to your JSP file
+    data: { auctionId: uuid },
+    dataType: "json",
+    success: function(data) {
+	      
+			populateListingInfo(data)
+	      	      
+	    },
+	    error: function(xhr, status, error) {
+	      	console.error("Error:", error);
+	    }
+  	});
 
-    $('.winning-price').text('US $' + listingData['winningPrice'])
-
-    console.log(listingData)
-
-    if (listingData['reserve'] > listingData['winningPrice']) {
-        $('.reserve-not-met').show();
-    }
-
-    $('.bids-count').text(listingData['bids'].length + ' bids')
-    $('.ends-in').text('Ends in ' + listingData['endsIn'])
-
-    $('.listing-condition').text(listingData['condition'])
-    $('.listing-category').text(listingData['category'])
-    $('.listing-seller').text(listingData['seller']).attr('href', 'user.html/' + listingData['seller'])
-
-    for (let i = 0; i < listingData['imageCount']; i++) {
-
-       const $galleryImg = $(`<div class="gallery-img"></div>`)
-
-       $galleryImg.css('background-image', `url('https://picsum.photos/500/550?${i}')`)
-
-       $('.img-gallery').append($galleryImg)
-
-    }
-
-    listingData['bids'].forEach(bid => {
+    /*listingData['bids'].forEach(bid => {
 
         const $bidElm = $(`
         <a href="/user.html/${bid.bidder}">${bid.bidder}</a>
@@ -53,18 +38,11 @@ $(document).ready(function() {
         <div>${listingData.startTime}</div>
     `)
 
-    $('.bid-breakdown').append($startPriceElm)
+    $('.bid-breakdown').append($startPriceElm)*/
 
     addAVew()
 
     $('.bid-price-input').val('')
-
-    $('.secret-bidding-word').click(function() {
-
-        $(this).hide();
-        $('.secret-bidding-wrapper').hide().removeClass('none').slideDown('fast').find('input').val('')
-
-    })
 
     $('input').on('input', function(event) {
         let currentValue = $(this).val();
@@ -87,6 +65,36 @@ $(document).ready(function() {
     });
 
 })
+
+function populateListingInfo(data) {
+		
+	$('.listing-title').text(data.title)
+    $('.listing-description').text(data.description)
+
+    /*$('.winning-price').text('US $' + listingData['winningPrice'])*/
+
+    //if (listingData['reserve'] > listingData['winningPrice']) {
+        $('.reserve-not-met').show();
+    //}
+
+    //$('.bids-count').text(listingData['bids'].length + ' bids')
+    //$('.ends-in').text('Ends in ' + listingData['endsIn'])
+
+    //$('.listing-condition').text(listingData['condition'])
+    //$('.listing-category').text(listingData['category'])
+    //$('.listing-seller').text(listingData['seller']).attr('href', 'user.html/' + listingData['seller'])
+
+    for (let i = 0; i < data.imageCount; i++) {
+
+       const $galleryImg = $(`<div class="gallery-img"></div>`)
+
+       $galleryImg.css('background-image', `url('https://picsum.photos/500/550?${i}')`)
+
+       $('.img-gallery').append($galleryImg)
+
+    }
+	
+}
 
 // Get auction info from the auction table in SQL via JSP via uuid primary key
 function getItemData(uuid) {
