@@ -1,0 +1,125 @@
+form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.main {
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+}
+
+.sell-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    width: 100%;
+    font-size: 3rem;
+    column-gap: 5rem;
+}
+
+.sell-category-select {
+    font-size: 2.5rem;
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid darkgray;
+}
+
+option {
+    font-family: Montserrat, Arial;
+}
+
+.inputs, .sell-images {
+    padding: 3rem;
+}
+
+.listing-type {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+    color: white;
+}
+
+.type-selected {
+    background-color: rgb(129, 0, 164) !important;
+    cursor: default !important;
+}
+
+.listing-type > div {
+    background-color: gray;
+    font-size: 2.5rem;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    transition: 200ms;
+}
+
+input {
+    font-size: 2.5rem;
+    padding: 1rem;
+    border: 1px solid darkgray;
+}
+
+input::placeholder {
+    font-family: Montserrat;
+}
+
+.sell-image-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 100%;
+    gap: 1rem;
+    grid-auto-rows: auto 1fr;
+}
+
+.sell-add-image {
+    font-size: 10rem;
+    font-family: Montserrat;
+    background-color: rgb(185, 185, 185);
+    color: rgb(129, 129, 129);
+    border-radius: 1rem;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    user-select: none;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.sell-add-image:hover {
+    background-color: gray;
+    color: lightgray;
+}
+
+.sell-img {
+    background-position: center;
+    background-size: cover;
+    aspect-ratio: 1;
+    border-radius: 1rem;
+}
+
+.publish {
+    color: white;
+    background-color: rgb(89, 0, 162);
+    border-radius: 3rem;
+    padding: 1rem;
+    font-size: 2.5rem;
+    width: max-content;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    transition: 111ms;
+    user-select: none;
+}
+
+.publish:not(.publish-error):hover {
+    background-color: rgb(150, 11, 150);
+    cursor: pointer;
+}
+
+.publish-error {
+    background-color: rgb(202, 59, 59);
+}

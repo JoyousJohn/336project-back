@@ -1,0 +1,71 @@
+.main {
+    display: flex;
+    margin-left: 160px;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    background-color: rgb(93, 46, 164);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 160px;
+}
+
+.sidebar-logo {
+    font-family: Richela Kids;
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 1rem;
+}
+
+.sidebar-top, .sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-family: Montserrat;
+    font-size: 2rem;
+    text-align: left;
+}                                               
+
+.sidebar-item {
+    padding: 1.5rem 2.5rem;
+    transition: 200ms;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-item:not(.sidebar-selected):hover {
+    background-color: rgb(64, 0, 128);
+}
+
+.sidebar-item:not(.sidebar-selected) {
+    cursor: pointer;
+}
+
+.sidebar-selected {
+    background-color: rgb(155, 153, 255);
+}
+
+.sidebar-item > i {
+    margin-right: 1rem;
+    font-size: 1.5rem;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    margin: 3rem;
+    margin-bottom: 0;
+    height: fit-content;
+    /* gap: 1rem; */
+}

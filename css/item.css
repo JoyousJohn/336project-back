@@ -1,0 +1,174 @@
+.listing-wrapper {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 2fr;
+    column-gap: 5rem;
+    margin: 8rem;
+}
+
+.main-image {
+    background-image: url('https://picsum.photos/500/550');
+    background-size: cover;
+    background-position: center;
+    aspect-ratio: 1;
+    border-radius: 0.5rem;
+    width: 100%;
+    border-radius: 1rem;
+}
+
+.img-gallery {
+    display: flex;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    margin-top: 1rem;
+    column-gap: 1rem;
+}
+
+.gallery-img {
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.5rem;
+    border-radius: 1rem;
+    width: 8rem;
+    height: 8rem;
+    aspect-ratio: 1;
+}
+
+.listing-right {
+    margin-bottom: 8rem;
+}
+
+.listing-title {
+    font-size: 3.5rem;
+}
+
+.winning-price {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.reserve-not-met {
+    display: none;
+    font-size: 2rem;
+    color: gray;
+    font-weight: 500;
+}
+
+.bids-count {
+    font-size: 2rem;
+    text-decoration: underline;
+}
+
+.ends-in {
+    font-size: 2rem;
+    color: rgb(100, 100, 100);
+    margin-left: 1rem;
+    font-weight: 500;
+}
+
+.listing-condition-wrap {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.listing-condition, .listing-category, .listing-seller {
+    font-weight: bold;
+}
+
+.secret-bidding-word {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;
+    font-weight: 500;
+    color: gray;
+    cursor: pointer;
+    transition: 200ms;
+    width: fit-content;
+    /* white-space: nowrap; */
+}
+
+.secret-bidding-wrapper > form {
+    display: flex;
+    align-items: center;
+}
+
+.secret-bidding-wrapper span {
+    display: block;
+    width: 12rem;
+}
+
+.secret-bidding-wrapper input {
+    width: 12rem;
+    margin-left: 1rem;
+}
+
+.secret-bidding-wrapper * {
+    font-size: 2rem;
+}
+
+.secret-bidding-word:hover {
+    color: rgb(78, 50, 204);
+}
+
+.missing-inputs {
+    background-color: rgb(199, 43, 43);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    width: fit-content;
+    margin-top: 0.5rem;
+}
+
+.bid-wrapper {
+    display: flex;
+    font-size: 2rem;
+}
+
+.bid-wrapper > * {
+    border-radius: 0.5rem;
+}
+
+.bid-price-input {
+    font-size: 2rem;
+    width: 12rem;
+    border: 1px solid gray;
+}
+
+.bid-price-input::placeholder {
+    font-family: Montserrat;
+}  
+
+.place-bid {
+    color: white;
+    background-color: rgb(77, 77, 205);
+    transition: 200ms;
+    cursor: pointer;
+}
+
+.place-bid:hover {
+    background-color: blue;
+}
+
+.listing-description {
+    margin-top: 4rem;
+    font-size: 2rem;
+}
+
+.bid-breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, auto));
+    margin-top: 3rem;
+    width: fit-content;
+    column-gap: 4rem;
+    font-size: 2rem;
+}
+
+.bid-history-title {
+    grid-column: span 3;
+    font-size: 2rem;
+    border-bottom: 1px solid gray;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
