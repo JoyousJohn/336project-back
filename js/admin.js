@@ -39,7 +39,8 @@ function getUsers() {
                     username: fields[0],
                     name: fields[1],
                     email: fields[2],
-                    role: fields[3]
+                    role: fields[3],
+                    userId: fields[4]
                 };
                 userList.push(user);
             } else {
@@ -53,6 +54,7 @@ function getUsers() {
     
 // Function to display users received from the server
 function displayUsers(usersData) {
+	console.log(usersData)
     $('.user-list').empty(); // Clear existing user list
     usersData.forEach(function(user) {
         const $userElm = `
@@ -74,7 +76,7 @@ function displayUsers(usersData) {
         $(`div[username="${name}"]`).addClass('managing-user')
 
         $('.manage-col-selected').removeClass('manage-col-selected')
-        $('.manage-info-wrap, .manage-danger-wrap').hide(); // Hide all wrapper
+        $('.manage-info-wrap, .manage-danger-wrap, .manage-auctions-wrap').hide(); // Hide all wrapper
         $('.manage-info-wrap').show();
         $('.manage-account-info').addClass('manage-col-selected')
         
@@ -93,6 +95,11 @@ function displayUsers(usersData) {
         // Remove any delete confirmation from past users being deleted
         $('.delete-user-btn').removeClass('delete-confirming').css('cursor', 'pointer').text('Delete user')
         $('.no-undone').hide();
+        
+        console.log(selectedUser)
+        
+        populateUserAuctions(selectedUser.userId)
+
 
     })
 
@@ -140,7 +147,7 @@ $(document).ready(function() {
         $('.manage-col-selected').removeClass('manage-col-selected')
         $(this).addClass('manage-col-selected')
 
-        $('.manage-info-wrap, .manage-danger-wrap').hide(); // Hide all wrapper
+        $('.manage-info-wrap, .manage-danger-wrap, .manage-auctions-wrap').hide(); // Hide all wrapper
 
         const managing = $(this).attr('managing')
         console.log(managing)
@@ -162,8 +169,49 @@ $(document).ready(function() {
     // Save changes button click event
     $('.save-changes').click(saveUserChanges);
 
-
 })
+
+function populateUserAuctions(userId) {
+	
+	$.ajax({
+    url: "get_user_auctions.jsp",
+    type: "GET",
+    data: { userId: userId}, // Replace "123" with the actual user ID
+    success: function(listings) {
+		
+		console.log(listings)
+		
+		$('.manage-auctions').text('Auctions (' + listings.length + ')')
+        
+        listings.forEach(listing => {
+			
+			$thisAuc = $('.m-auc-item-template').clone().removeClass('m-auc-item-template')
+			
+			$thisAuc.find('.title').text(listing.title)
+			
+			let x = formatDatetime(listing.when_closes)
+	
+			days = x[0]
+			hours = x[1]
+			minutes = x[2]
+			
+			const remaining_text = `${days}d ${hours}h ${minutes}m remaining`;
+					
+			$thisAuc.find('.time-remaining').text(remaining_text);
+			
+			$thisAuc.attr('href', `index.html?uuid=${listing.auction_id}`)
+			
+			$('.manage-auctions-wrap').append($thisAuc)
+			
+		})
+        
+    },
+    error: function(xhr, status, error) {
+        console.error(error);
+    }
+});
+	
+}
 
 // Function to delete a user via AJAX
 function deleteUser(username) {
