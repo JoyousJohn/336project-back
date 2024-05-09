@@ -43,6 +43,8 @@ $(document).ready(function() {
 
 })
 
+let bidData
+
 function populateListingInfo(data) {
 				
 	console.log(data)
@@ -77,9 +79,13 @@ function populateListingInfo(data) {
       
     let bidInfo = JSON.parse(data.bid_info.replaceAll(`'`, `"`))
  
- 	$('.winning-price').text('US $' + bidInfo[bidInfo.length-1].bid)
+ 	bidData = bidInfo
  
- 	if (data.reserve > bidInfo[bidInfo.length-1].bid) {
+ 	const currentBid = bidInfo[bidInfo.length-1].bid
+ 
+ 	$('.winning-price').text('US $' + currentBid)
+ 
+ 	if (data.reserve > currentBid) {
     	$('.reserve-not-met').show();
     }
     
@@ -108,7 +114,7 @@ function populateListingInfo(data) {
 				console.log('u: ', u)
 
 				if (u === 0) {
-					$('.listing-seller').text('df').attr('href', 'profile.html?uuid=' + bid.seller_id)
+					$('.listing-seller').text(response.trim()).attr('href', 'profile.html?uuid=' + bid.seller_id)
 				}
 			    
 			  },
@@ -125,6 +131,10 @@ function populateListingInfo(data) {
 	 	
 	    
 	});
+	
+	const minBid = parseFloat(currentBid) + parseFloat(data.bid_increment)
+	
+	$('.minimum-bid').text('Minimum bid: $' + minBid)
 
   
 }
@@ -160,46 +170,20 @@ function addAVew(uuid) {
 function placeBid() {
 
     const bidAmount = $('.bid-price-input').val()
-
-    // If secret bidding was enabled
-    if (!$('.secret-bidding-wrapper').hasClass('none')) {
-        const bidLimit = $('.secret-upper-limit').val();
-        const bidIncrement = $('.secret-increment').val();
-
-        // Confirm inputs aren't blank
-        if (bidAmount === '' || bidAmount === '$' || bidLimit === '' || bidLimit === '$' || bidIncrement === '' || bidIncrement === '$') {
-            $('.missing-inputs').removeClass('none')
-            return
-        }
-
-        const bidInfo = {
-            'bidAmount': bidAmount,
-            'bidType': 'auto',
-            'bidLimit': bidLimit,
-            'bidIncrement': bidIncrement
-        }
-
-        postBid(bidInfo)
-
+   
+    // Confirm inputs aren't blank
+    if (bidAmount === '' || bidAmount === '$') {
+        $('.missing-inputs').removeClass('none')
+        return
     }
 
-    // Normal bidding
-    else {
+	
 
-        // Confirm inputs aren't blank
-        if (bidAmount === '' || bidAmount === '$') {
-            $('.missing-inputs').removeClass('none')
-            return
-        }
+    /*const bidInfo = {
+        'bidAmount': bidAmount,
+    }*/
 
-        const bidInfo = {
-            'bidAmount': bidAmount,
-            'bidType': 'manual',
-        }
-
-        postBid(bidInfo)
-
-    }
+    //postBid(bidInfo)
 
 }
 
@@ -225,42 +209,5 @@ function postBid(bidInfo) {
             // Tell the user there was an error
         }
     });
-
-}
-
-function getExampleListingData() {
-
-    return {
-        'title': 'Vintage Running Shoe',
-        'winningPrice': 24.73,
-        'reserve': 28.00,
-        'endsIn': '12h 18m 4s',
-        'condition': 'Used',
-        'imageCount': 6,
-        'category': 'Running',
-        'startPrice': 8.53,
-        'startTime': 'May 2, 2024, 4:28 AM',
-        'seller': 'randomorange123',
-
-        'description': `Step back in time with these classic vintage running shoes! These retro kicks boast timeless style and are perfect for sneakerheads and collectors alike. Crafted with quality materials and featuring a comfortable design, they're not just a fashion statement but a piece of history. Whether you're hitting the pavement or adding to your collection, these sneakers are sure to turn heads. Don't miss out on owning a piece of nostalgia - bid now!`,
-
-        'bids': [
-            {
-                'bidder': 'waterbottle',
-                'maxBid': 24.73,
-                'bidTimeString': 'May 4, 2024, 3:41 PM'
-            },
-            {
-                'bidder': 'middleman',
-                'maxBid': 18.54,
-                'bidTimeString': 'May 4, 2024, 1:00 PM'
-            },
-            {
-                'bidder': 'tidepodfun',
-                'maxBid': 10.12,
-                'bidTimeString': 'May 3, 2024, 7:38 AM'
-            }
-        ]
-    }
 
 }
