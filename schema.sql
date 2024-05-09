@@ -252,11 +252,14 @@ CREATE TABLE `posted_auction` (
   `auction_id` int NOT NULL,
   `seller_id` int NOT NULL,
   `when_closes` datetime DEFAULT NULL,
-  `description` varchar(250) DEFAULT NULL, 
+  `description` varchar(512) DEFAULT NULL, 
   `status` varchar(50) DEFAULT 'Open',
   `bid_increment` double DEFAULT NULL,
   `reserve` double DEFAULT NULL,
   `imageCount` int DEFAULT NULL,
+  `title`  varchar(64) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `bid_info` varchar(2048) DEFAULT NULL,
   PRIMARY KEY (`auction_id`),
   KEY `seller_id` (`seller_id`),
   CONSTRAINT `posted_auction_ibfk_1` FOREIGN KEY (`seller_id`) REFERENCES `end_user` (`user_id`)
@@ -283,3 +286,5 @@ UNLOCK TABLES;
 
 -- Dump completed on 2024-04-14 20:57:06
 
+
+insert into end_user values (user_id, username, password, name, email, role, prev_auctions), (1,'user', 'pass', 'Admin', 'email', 'ADMIN', NULL);
