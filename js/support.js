@@ -95,17 +95,18 @@ $(document).ready(function() {
     });
 });
 
+
 // Function to render a thread on the page
 function renderThread(thread) {
     const $threadItem = $('.example-thread').clone().removeClass('example-thread');
-    $threadItem.find('.thread-question-title').text(thread['thread-question-title']);
-    
+    $threadItem.find('.thread-question-title').text(thread['messageText']); // Use 'messageText' instead of 'thread-question-title'
+
     // Check if thread-messages property exists and is an array
     if (Array.isArray(thread['thread-messages']) && thread['thread-messages'].length > 0) {
         const lastMessage = thread['thread-messages'][thread['thread-messages'].length - 1];
         $threadItem.find('.thread-latest-reply-time').text('Latest reply time: ' + lastMessage['datetime']);
         $threadItem.find('.thread-chat-count').text(thread['thread-messages'].length + ' messages');
-    
+
         thread['thread-messages'].forEach(threadMessage => {
             const $threadMessagElm = $('.example-thread-message').clone().removeClass('example-thread-message');
             $threadMessagElm.find('.username').text(threadMessage['username']);

@@ -9,7 +9,7 @@ ResultSet rs = null;
 
 try {
     conn = db.getConnection();
-    pstmt = conn.prepareStatement("SELECT message_id, messageText, user_id FROM message WHERE response_thread IS NOT NUL");
+    pstmt = conn.prepareStatement("SELECT message_id, messageText, user_id FROM message WHERE response_thread IS NOT NULL");
 
     rs = pstmt.executeQuery();
 
