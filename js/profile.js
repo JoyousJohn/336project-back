@@ -58,6 +58,8 @@ function populateListings() {
 	
 	        $thisListing.find('.listing-title').text(listing.title);
 	
+			$thisListing.attr('href', `item.html?uuid=${listing.auction_id}`)
+	
 			let closes = listing.when_closes
 			x = formatDatetime(closes)
 			
