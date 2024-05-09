@@ -31,7 +31,6 @@ $(document).ready(function() {
     $('.sell-add-image').click(function() {
 
         const imageCount = $('.sell-image-wrapper').children().length - 1 // -1 for the + div
-        alert(imageCount)
         const maxImages = 8
 
         if (imageCount < maxImages) {
@@ -162,11 +161,17 @@ function publishAuction(newListing) {
     console.log("Publishing auction with data:", newListing);
     
     // Return a Promise
+    
+    const s = $('form').serialize();
+    const c = $('.sell-image-wrapper').children().length - 1;
+    
+    const b = `${s}&imageCount=${c}`
+    
     return new Promise(function(resolve, reject) {
         $.ajax({
             url: 'sell.jsp',
             method: 'POST', 
-            data: $('form').serialize(), // Serialize form data
+            data: b, // Serialize form data
             success: function(response) {
                 console.log('Auction published successfully!!');
                 console.log('Response:', response);
